@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=11 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://levels/background.gdshader" id="2_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://cxbtq6b3c4wxs" path="res://game/player_ui.tscn" id="2_m1504"]
 [ext_resource type="PackedScene" uid="uid://dk4r11aytipf" path="res://game/tile.tscn" id="2_wdj6m"]
+[ext_resource type="Texture2D" uid="uid://cn2v73fst1q6l" path="res://content/textures/blank_texture.tres" id="5_5k4jt"]
 [ext_resource type="Script" uid="uid://b5q4p6ic2b2xn" path="res://game/game_tile_map.gd" id="5_ifaiv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
@@ -13,8 +14,13 @@ shader_parameter/primary_color = Color(0.41, 0.31043833, 0.21729998, 1)
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2262g"]
 scenes/1/scene = ExtResource("2_wdj6m")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qy63d"]
+texture = ExtResource("5_5k4jt")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_2262g"]
 sources/0 = SubResource("TileSetScenesCollectionSource_2262g")
+sources/1 = SubResource("TileSetAtlasSource_qy63d")
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap")]
 script = ExtResource("1_2262g")
@@ -34,6 +40,6 @@ grow_vertical = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
-tile_map_data = PackedByteArray("AAD/////AAAAAAAAAQD//wAAAAAAAAAAAQD//wEAAAAAAAAAAQAAAAEAAAAAAAAAAQABAAEAAAAAAAAAAQABAAAAAAAAAAAAAQABAP//AAAAAAAAAQAAAP//AAAAAAAAAQA=")
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)
 tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")

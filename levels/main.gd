@@ -28,9 +28,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
-		var global_pos := _viewport_to_global_pos(event.position)
-		var cell := _get_node_at(global_pos)
-		print(cell)
+		var cell_pos := _viewport_to_cell_pos(event.position)
+		var node := tilemap.get_cell_tile(cell_pos)
+		if node:
+			node.apply_damage(1)
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
@@ -38,7 +39,10 @@ func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var center_relative := viewport_pos - get_viewport_rect().size * .5
 	return center_relative * controller.camera.global_transform.affine_inverse() / controller.camera.zoom
 
+func _viewport_to_cell_pos(viewport_pos: Vector2) -> Vector2i:
+	var global_pos := _viewport_to_global_pos(viewport_pos)
+	return tilemap.local_to_map(tilemap.to_local(global_pos))
+
 func _get_node_at(global_pos: Vector2) -> Node:
-	if not tilemap: return null
 	var map_pos := tilemap.local_to_map(tilemap.to_local(global_pos))
 	return tilemap.get_cell_node(map_pos)
