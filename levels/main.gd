@@ -5,7 +5,6 @@ extends Node2D
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
-	tilemap.tile_destroyed.connect(_tile_destroyed)
 
 func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
@@ -36,21 +35,50 @@ func _unhandled_input(event: InputEvent) -> void:
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
 		var cell_pos := _viewport_to_cell_pos(event.position)
-		var node := tilemap.get_cell_tile(cell_pos)
-		if node:
-			node.apply_damage(1)
+		var tile := tilemap.get_cell_tile(cell_pos)
+		if tile:
+			tile.apply_damage(1)
 			get_viewport().set_input_as_handled()
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return viewport_pos
 	var center_relative := viewport_pos - get_viewport_rect().size * .5
-	return center_relative * controller.camera.global_transform.affine_inverse() / controller.camera.zoom
+	return (center_relative / controller.camera.zoom) * controller.camera.global_transform.affine_inverse()
 
 func _viewport_to_cell_pos(viewport_pos: Vector2) -> Vector2i:
 	var global_pos := _viewport_to_global_pos(viewport_pos)
 	return tilemap.local_to_map(tilemap.to_local(global_pos))
 
-func _get_node_at(global_pos: Vector2) -> Node:
+func _get_tile_at(global_pos: Vector2) -> Node:
 	var map_pos := tilemap.local_to_map(tilemap.to_local(global_pos))
 	return tilemap.get_cell_node(map_pos)
+
+func _bounds_changed(bounds: Rect2i) -> void:
+	var controller: ExpansionPlayerController = Players.get_primary_controller()
+	if not controller: return
+	var camera := controller.camera
+	var tile_bounds := tilemap.bounds.grow(2)
+	var tile_size := tilemap.tile_set.tile_size
+	var viewport_size := Vector2(camera.get_viewport().size)
+
+	var world_bounds := Rect2(
+		tile_bounds.position * tile_size,
+		tile_bounds.size * tile_size,
+	)
+
+	var dx := maxf(
+		camera.global_position.x - world_bounds.position.x,
+		world_bounds.position.x + world_bounds.size.x - camera.global_position.x
+	)
+	var dy := maxf(
+		camera.global_position.y - world_bounds.position.y,
+		world_bounds.position.y + world_bounds.size.y - camera.global_position.y
+	)
+
+	var world_span := Vector2(dx, dy) * 2.0
+	var zoom := viewport_size / world_span
+
+	var tween := get_tree().create_tween()
+	tween.tween_property(camera, "zoom", Vector2.ONE * minf(zoom.x, zoom.y), 0.2)
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)

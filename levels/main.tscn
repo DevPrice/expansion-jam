@@ -43,3 +43,6 @@ position = Vector2(-8, -8)
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)
 tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")
+
+[connection signal="bounds_changed" from="TileMapLayer" to="." method="_bounds_changed"]
+[connection signal="tile_destroyed" from="TileMapLayer" to="." method="_tile_destroyed"]
