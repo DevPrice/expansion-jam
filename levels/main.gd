@@ -5,9 +5,11 @@ extends Node2D
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
+	get_viewport().size_changed.connect(_window_size_changed)
 
 func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
+	get_viewport().size_changed.disconnect(_window_size_changed)
 
 func _player_joined(controller: PlayerController) -> void:
 	var player := controller.get_local_player()
@@ -19,6 +21,7 @@ func _player_joined(controller: PlayerController) -> void:
 		canvas_layer.layer = 10
 		player.get_viewport().add_child(canvas_layer)
 	_init_game()
+	_update_zoom(tilemap.bounds)
 
 func _init_game() -> void:
 	pass
@@ -55,6 +58,12 @@ func _get_tile_at(global_pos: Vector2) -> Node:
 	return tilemap.get_cell_node(map_pos)
 
 func _bounds_changed(bounds: Rect2i) -> void:
+	_update_zoom(bounds)
+
+func _window_size_changed() -> void:
+	_update_zoom(tilemap.bounds, false)
+
+func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	var camera := controller.camera
@@ -79,6 +88,10 @@ func _bounds_changed(bounds: Rect2i) -> void:
 	var world_span := Vector2(dx, dy) * 2.0
 	var zoom := viewport_size / world_span
 
-	var tween := get_tree().create_tween()
-	tween.tween_property(camera, "zoom", Vector2.ONE * minf(zoom.x, zoom.y), 0.2)
-	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)
+	if zoom > camera.zoom:
+		if tween_zoom:
+			var tween := get_tree().create_tween()
+			tween.tween_property(camera, "zoom", Vector2.ONE * minf(zoom.x, zoom.y), 0.2)
+			tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)
+		else:
+			camera.zoom = Vector2.ONE * minf(zoom.x, zoom.y)
