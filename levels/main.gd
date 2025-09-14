@@ -24,7 +24,7 @@ func _player_joined(controller: PlayerController) -> void:
 	_update_zoom(tilemap.bounds)
 
 func _init_game() -> void:
-	pass
+	_update_zoom(tilemap.bounds, false)
 
 func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
@@ -40,7 +40,7 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 		var cell_pos := _viewport_to_cell_pos(event.position)
 		var tile := tilemap.get_cell_tile(cell_pos)
 		if tile:
-			tile.apply_damage(1)
+			tile.apply_damage(1.0)
 			get_viewport().set_input_as_handled()
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:

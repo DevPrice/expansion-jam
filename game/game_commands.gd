@@ -1,5 +1,5 @@
 class_name GameCommands extends ConsoleCommands
 
-func set_points(amount: int) -> void:
+func set_points(amount: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	controller.player_state.points = amount

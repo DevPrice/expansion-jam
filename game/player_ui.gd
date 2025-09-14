@@ -10,8 +10,10 @@ func _possessed(controller: ExpansionPlayerController) -> void:
 	_update_points(controller.player_state.points)
 	controller.player_state.points_changed.connect(_update_points)
 
-func _update_points(points: int) -> void:
+func _update_points(points: float) -> void:
 	points_text.text = "Score: %s" % _format_points(points)
 
-func _format_points(points: int) -> String:
-	return str(points)
+func _format_points(points: float) -> String:
+	if points > 1_000_000_000_000_000.0:
+		return Strings.scientific(points)
+	return Strings.format_int(roundi(points))
