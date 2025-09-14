@@ -14,6 +14,7 @@ func _player_joined(controller: PlayerController) -> void:
 	var player := controller.get_local_player()
 	if player_ui_scene and player:
 		player.hud = player_ui_scene.instantiate()
+		controller.claim(player.hud)
 		var canvas_layer := CanvasLayer.new()
 		canvas_layer.add_child(player.hud)
 		canvas_layer.layer = 10

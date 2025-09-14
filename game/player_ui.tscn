@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=2 format=3 uid="uid://cxbtq6b3c4wxs"]
 
-[node name="PlayerUi" type="Control"]
+[ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
+
+[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -8,6 +10,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("1_3qdfi")
+points_text = NodePath("MarginContainer/Control/PointsLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -25,7 +29,7 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 mouse_filter = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Control"]
+[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = 1
