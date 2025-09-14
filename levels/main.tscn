@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=5 format=4 uid="uid://oi3i377mpp5w"]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
+[ext_resource type="PackedScene" uid="uid://dk4r11aytipf" path="res://game/tile.tscn" id="2_wdj6m"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2262g"]
+scenes/1/scene = ExtResource("2_wdj6m")
+
+[sub_resource type="TileSet" id="TileSet_2262g"]
+sources/0 = SubResource("TileSetScenesCollectionSource_2262g")
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap")]
+script = ExtResource("1_2262g")
+tilemap = NodePath("TileMapLayer")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAD/////AAAAAAAAAQD//wAAAAAAAAAAAQD//wEAAAAAAAAAAQAAAAEAAAAAAAAAAQABAAEAAAAAAAAAAQABAAAAAAAAAAAAAQABAP//AAAAAAAAAQAAAP//AAAAAAAAAQA=")
+tile_set = SubResource("TileSet_2262g")

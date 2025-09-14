@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ri13gyj3hp1c"
-path="res://.godot/imported/GWJ-Full-Logo-tag-4k.png-47240181e3be61d658741e2b8053f542.ctex"
+uid="uid://ceiyhgh2ufhjd"
+path="res://.godot/imported/blur_square.png-1a0c6f41994ffe47c35fb20ec826b28f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://content/GWJ-Full-Logo-tag-4k.png"
-dest_files=["res://.godot/imported/GWJ-Full-Logo-tag-4k.png-47240181e3be61d658741e2b8053f542.ctex"]
+source_file="res://content/textures/blur_square.png"
+dest_files=["res://.godot/imported/blur_square.png-1a0c6f41994ffe47c35fb20ec826b28f.ctex"]
 
 [params]
 
@@ -23,13 +23,13 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
-process/channel_remap/red=0
-process/channel_remap/green=1
-process/channel_remap/blue=2
+process/channel_remap/red=8
+process/channel_remap/green=8
+process/channel_remap/blue=8
 process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false

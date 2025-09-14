@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk4r11aytipf"]
+
+[ext_resource type="Shader" uid="uid://x7drrf7iqx0e" path="res://content/shaders/shape.gdshader" id="1_7cios"]
+[ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qljeg"]
+shader = ExtResource("1_7cios")
+shader_parameter/tint = Color(0.98039216, 0.70980394, 0.4392157, 1)
+shader_parameter/shape_tint = Color(0.70188653, 0.34628996, 0.0326854, 1)
+shader_parameter/edge = 0.5
+shader_parameter/smoothing = 0.05
+shader_parameter/translation_speed = Vector2(0.1, 0.05)
+shader_parameter/shape_spacing = 0.29
+shader_parameter/shape_size = 0.35
+shader_parameter/shadow_size = Vector2(0, 0.08)
+
+[node name="Tile" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_qljeg")
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("2_ifppd")
+expand_mode = 1

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://db3rogcwohfoj"]
+
+[ext_resource type="PackedScene" uid="uid://cosl2gcdqfe0x" path="res://addons/player_controller/scenes/player_controller.tscn" id="1_4mwp2"]
+[ext_resource type="Script" uid="uid://ufqv44ngnaot" path="res://game/expansion_player_controller.gd" id="2_jknqt"]
+
+[node name="PlayerController" node_paths=PackedStringArray("camera") instance=ExtResource("1_4mwp2")]
+script = ExtResource("2_jknqt")
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="." index="1"]
+zoom = Vector2(8, 8)
