@@ -83,6 +83,12 @@ text_completion_next={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Static"
+2d_physics/layer_2="Dynamic"
+2d_physics/layer_3="Clickable"
+
 [players]
 
 config/player_controller_scene="uid://db3rogcwohfoj"

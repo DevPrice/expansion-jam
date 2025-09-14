@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var tilemap: TileMapLayer
+@export var tilemap: GameTileMap
 @export var player_ui_scene: PackedScene
 
 func _enter_tree() -> void:
@@ -21,3 +21,24 @@ func _player_joined(controller: PlayerController) -> void:
 
 func _init_game() -> void:
 	pass
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed():
+		_unhandled_click(event)
+
+func _unhandled_click(event: InputEventMouseButton) -> void:
+	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
+		var global_pos := _viewport_to_global_pos(event.position)
+		var cell := _get_node_at(global_pos)
+		print(cell)
+
+func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
+	var controller: ExpansionPlayerController = Players.get_primary_controller()
+	if not controller: return viewport_pos
+	var center_relative := viewport_pos - get_viewport_rect().size * .5
+	return center_relative * controller.camera.global_transform.affine_inverse() / controller.camera.zoom
+
+func _get_node_at(global_pos: Vector2) -> Node:
+	if not tilemap: return null
+	var map_pos := tilemap.local_to_map(tilemap.to_local(global_pos))
+	return tilemap.get_cell_node(map_pos)

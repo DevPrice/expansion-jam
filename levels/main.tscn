@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=9 format=4 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://levels/background.gdshader" id="2_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://cxbtq6b3c4wxs" path="res://game/player_ui.tscn" id="2_m1504"]
 [ext_resource type="PackedScene" uid="uid://dk4r11aytipf" path="res://game/tile.tscn" id="2_wdj6m"]
+[ext_resource type="Script" uid="uid://b5q4p6ic2b2xn" path="res://game/game_tile_map.gd" id="5_ifaiv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
 shader = ExtResource("2_l8qe7")
@@ -35,3 +36,4 @@ grow_vertical = 2
 position = Vector2(-8, -8)
 tile_map_data = PackedByteArray("AAD/////AAAAAAAAAQD//wAAAAAAAAAAAQD//wEAAAAAAAAAAQAAAAEAAAAAAAAAAQABAAEAAAAAAAAAAQABAAAAAAAAAAAAAQABAP//AAAAAAAAAQAAAP//AAAAAAAAAQA=")
 tile_set = SubResource("TileSet_2262g")
+script = ExtResource("5_ifaiv")

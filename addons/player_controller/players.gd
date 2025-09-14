@@ -84,6 +84,9 @@ func join_player(player: Player) -> PlayerController:
 func _player_exiting(player_controller: PlayerController) -> void:
 	player_leaving.emit(player_controller)
 
+func get_primary_controller() -> PlayerController:
+	return Controller.get_instigator(primary_player)
+
 func get_controllers_for_peer(peer_id: int) -> Array[PlayerController]:
 	var result: Array[PlayerController] = []
 	if peer_id == multiplayer.get_unique_id():

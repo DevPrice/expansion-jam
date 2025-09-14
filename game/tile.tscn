@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dk4r11aytipf"]
+[gd_scene load_steps=5 format=3 uid="uid://dk4r11aytipf"]
 
 [ext_resource type="Shader" uid="uid://x7drrf7iqx0e" path="res://content/shaders/shape.gdshader" id="1_7cios"]
+[ext_resource type="Script" uid="uid://bfmsmxbad4ttw" path="res://game/tile.gd" id="1_ifppd"]
 [ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qljeg"]
@@ -15,6 +16,7 @@ shader_parameter/shape_size = 0.35
 shader_parameter/shadow_size = Vector2(0, 0.08)
 
 [node name="Tile" type="Node2D"]
+script = ExtResource("1_ifppd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_qljeg")
