@@ -6,6 +6,8 @@ signal destroyed
 	set(value):
 		hp = maxi(0, value)
 
+@export var point_value: int = 1
+
 func apply_damage(damage: int) -> void:
 	var was_alive := hp > 0
 	hp -= max(0, damage)

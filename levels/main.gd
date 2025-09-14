@@ -5,6 +5,7 @@ extends Node2D
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
+	tilemap.tile_destroyed.connect(_tile_destroyed)
 
 func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
@@ -22,6 +23,11 @@ func _player_joined(controller: PlayerController) -> void:
 func _init_game() -> void:
 	pass
 
+func _tile_destroyed(tile: Tile) -> void:
+	var controller: ExpansionPlayerController = Players.get_primary_controller()
+	if not controller: return
+	controller.player_state.points += tile.point_value
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		_unhandled_click(event)
@@ -32,6 +38,7 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 		var node := tilemap.get_cell_tile(cell_pos)
 		if node:
 			node.apply_damage(1)
+			get_viewport().set_input_as_handled()
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
