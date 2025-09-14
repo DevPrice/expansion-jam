@@ -6,8 +6,6 @@ func _ready() -> void:
 	_setup_peer()
 	if Players.primary_player and is_multiplayer_authority():
 		Players.join_player.call_deferred(Players.primary_player)
-	if multiplayer.is_server() and OS.has_feature("debug"):
-		get_window().title = "%s (%s)" % [get_window().title, multiplayer.get_unique_id()]
 
 func _enter_tree() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected, ConnectFlags.CONNECT_DEFERRED)
@@ -61,8 +59,9 @@ func join_server(address: String) -> void:
 	multiplayer.multiplayer_peer = peer
 
 func _connected_to_server() -> void:
-	print("[%s] Connected to server!" % [multiplayer.get_unique_id()])
-	if OS.has_feature("debug"): get_window().title = "%s (%s)" % [get_window().title, multiplayer.get_unique_id()]
+	var unique_id := multiplayer.get_unique_id()
+	print("[%s] Connected to server!" % [unique_id])
+	if OS.has_feature("debug"): get_window().title = "%s (%s)" % [get_window().title, unique_id]
 	multiplayer.get_peers()
 
 func _connection_failed() -> void:

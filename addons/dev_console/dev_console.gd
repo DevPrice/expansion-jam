@@ -94,7 +94,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func open() -> void:
 	if not _active_ui and _console_enabled():
 		_active_ui = _console_ui_scene.instantiate()
-		_active_ui.z_index = RenderingServer.CANVAS_ITEM_Z_MAX
 		get_viewport().add_child(_active_ui)
 
 func close() -> void:
