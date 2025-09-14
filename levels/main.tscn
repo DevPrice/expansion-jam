@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=4 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=8 format=4 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
+[ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://levels/background.gdshader" id="2_l8qe7"]
+[ext_resource type="PackedScene" uid="uid://cxbtq6b3c4wxs" path="res://game/player_ui.tscn" id="2_m1504"]
 [ext_resource type="PackedScene" uid="uid://dk4r11aytipf" path="res://game/tile.tscn" id="2_wdj6m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
+shader = ExtResource("2_l8qe7")
+shader_parameter/primary_color = Color(0.41, 0.31043833, 0.21729998, 1)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2262g"]
 scenes/1/scene = ExtResource("2_wdj6m")
@@ -12,6 +18,18 @@ sources/0 = SubResource("TileSetScenesCollectionSource_2262g")
 [node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap")]
 script = ExtResource("1_2262g")
 tilemap = NodePath("TileMapLayer")
+player_ui_scene = ExtResource("2_m1504")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_m1504")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
