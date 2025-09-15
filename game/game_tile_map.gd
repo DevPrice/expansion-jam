@@ -1,5 +1,6 @@
 class_name GameTileMap extends TileMapLayer
 
+signal tile_damaged(tile: Tile, damage: float)
 signal tile_destroyed(tile: Tile)
 signal bounds_changed(bounds: Rect2i)
 
@@ -22,6 +23,10 @@ func _exit_tree() -> void:
 func _child_entered(child: Node) -> void:
 	_scenes[local_to_map(child.position)] = child
 	if child is Tile:
+		var cell_pos := local_to_map(child.position)
+		var distance := maxi(abs(cell_pos.x), abs(cell_pos.y))
+		child.hp = maxf(distance, 1)
+		child.damaged.connect(_tile_damaged.bind(child))
 		child.destroyed.connect(_tile_destroyed.bind(child))
 
 func _child_exiting(child: Node) -> void:
@@ -29,6 +34,9 @@ func _child_exiting(child: Node) -> void:
 
 func get_cell_tile(map_position: Vector2i) -> Tile:
 	return _scenes.get(map_position)
+
+func _tile_damaged(damage: float, tile: Tile) -> void:
+	tile_damaged.emit(tile, damage)
 
 func _tile_destroyed(tile: Tile) -> void:
 	var cell_pos := local_to_map(tile.position)
@@ -46,8 +54,3 @@ func add_tile(map_pos: Vector2i, emit_bounds_changed: bool = true) -> void:
 
 func _update_bounds(new_pos: Vector2i) -> void:
 	bounds = bounds.expand(new_pos)
-
-enum TileType {
-	EMPTY = 2,
-	BASIC = 1,
-}

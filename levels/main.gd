@@ -28,10 +28,15 @@ func _player_joined(controller: ExpansionPlayerController) -> void:
 func _init_game() -> void:
 	_update_zoom(tilemap.bounds, false)
 
-func _tile_destroyed(tile: Tile) -> void:
+func _tile_damaged(tile: Tile, damage: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
-	controller.player_state.points += tile.point_value
+	controller.player_state.points += damage * tile.point_value
+
+func _tile_destroyed(_tile: Tile) -> void:
+	var controller: ExpansionPlayerController = Players.get_primary_controller()
+	if not controller: return
+	controller.player_state.points += controller.player_state.tile_bonus
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():

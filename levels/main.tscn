@@ -45,4 +45,5 @@ tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")
 
 [connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
+[connection signal="tile_damaged" from="Tiles" to="." method="_tile_damaged"]
 [connection signal="tile_destroyed" from="Tiles" to="." method="_tile_destroyed"]

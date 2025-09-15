@@ -1,5 +1,6 @@
 class_name Tile extends Node2D
 
+signal damaged(damage: float)
 signal destroyed
 
 @export var hp: float = 1:
@@ -9,7 +10,9 @@ signal destroyed
 @export var point_value: float = 1
 
 func apply_damage(damage: float) -> void:
-	var was_alive := hp > 0
+	var start_hp := hp
 	hp -= max(0, damage)
-	if was_alive and is_zero_approx(hp):
+	var dealt := start_hp - hp
+	damaged.emit(dealt)
+	if start_hp > 0 and is_zero_approx(hp):
 		destroyed.emit()

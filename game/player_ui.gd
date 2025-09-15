@@ -20,7 +20,7 @@ func _possessed(controller: ExpansionPlayerController) -> void:
 	controller.player_state.autoclickers_changed.connect(_update_autoclickers)
 
 func _update_points(points: float) -> void:
-	if is_inside_tree():
+	if abs(points - _displayed_score) > 2 and is_inside_tree():
 		var tween := get_tree().create_tween()
 		tween.tween_property(self, "_displayed_score", points, clamp(abs(_log10(points) - _log10(_displayed_score)) * .5, .15, 2.0))
 		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
