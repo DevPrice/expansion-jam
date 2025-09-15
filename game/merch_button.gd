@@ -24,6 +24,8 @@ signal level_changed
 
 @export var cost_curve: Curve
 
+@export var unlock_on_purchase: Array[Node]
+
 var level: int = 0:
 	set(value):
 		level = value
@@ -40,8 +42,9 @@ func _pressed() -> void:
 		_controller.player_state.points -= cost
 		level += 1
 		_update_cost()
-		purchased.emit()
 		_purchased()
+		_unlock()
+		purchased.emit()
 		if not cost_curve:
 			queue_free()
 
@@ -54,3 +57,8 @@ func _update_cost() -> void:
 			cost = cost_curve.sample(level)
 		else:
 			queue_free()
+
+func _unlock() -> void:
+	for node: Control in unlock_on_purchase:
+		node.visible = true
+	unlock_on_purchase.clear()

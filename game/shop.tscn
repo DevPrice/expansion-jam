@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=10 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="PackedScene" uid="uid://cilynqqcec2rj" path="res://game/merch_button.tscn" id="1_ungis"]
@@ -13,14 +13,20 @@ MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
 
 [sub_resource type="Curve" id="Curve_jbcvl"]
-_data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0, Vector2(1, 200), 0.0, 0.0, 0, 0]
-point_count = 3
+_limits = [0.0, 2500.0, 0.0, 5.0]
+_data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(1, 50), 0.0, 0.0, 0, 0, Vector2(2, 200), 0.0, 0.0, 0, 0, Vector2(3, 400), 0.0, 0.0, 0, 0, Vector2(4, 1000), 0.0, 0.0, 0, 0, Vector2(5, 2500), 0.0, 0.0, 0, 0]
+point_count = 6
 
 [sub_resource type="Curve" id="Curve_p41nr"]
 _limits = [0.0, 1000000.0, 0.0, 250.0]
 _data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(1, 25), 0.0, 0.0, 0, 0, Vector2(2, 30), 0.0, 0.0, 0, 0, Vector2(3, 40), 0.0, 0.0, 0, 0, Vector2(4, 70), 0.0, 0.0, 0, 0, Vector2(5, 100), 0.0, 0.0, 0, 0, Vector2(10, 150), 0.0, 0.0, 0, 0, Vector2(100, 1000), 0.0, 0.0, 0, 0, Vector2(125, 10000), 0.0, 0.0, 0, 0, Vector2(150, 100000), 0.0, 0.0, 0, 0, Vector2(200, 1000000), 0.0, 0.0, 0, 0]
 point_count = 11
 metadata/_snap_count = 14
+
+[sub_resource type="Curve" id="Curve_a73qu"]
+_limits = [0.0, 2500.0, 0.0, 5.0]
+_data = [Vector2(0, 20), 0.0, 0.0, 0, 0, Vector2(1, 50), 0.0, 0.0, 0, 0, Vector2(2, 200), 0.0, 0.0, 0, 0, Vector2(3, 400), 0.0, 0.0, 0, 0, Vector2(4, 1000), 0.0, 0.0, 0, 0, Vector2(5, 2500), 0.0, 0.0, 0, 0]
+point_count = 6
 
 [node name="Shop" type="PanelContainer" node_paths=PackedStringArray("_merch_container")]
 custom_minimum_size = Vector2(400, 0)
@@ -52,16 +58,18 @@ title = "Click power"
 description = "Increased the strength of your clicks"
 cost_curve = SubResource("Curve_jbcvl")
 
-[node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+[node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("unlock_on_purchase") instance=ExtResource("1_ungis")]
 layout_mode = 2
 script = ExtResource("3_jbcvl")
 title = "Auto clicker"
 description = "Automatically clicks one tile every second"
 cost_curve = SubResource("Curve_p41nr")
+unlock_on_purchase = [NodePath("../AutoclickerPower")]
 
 [node name="AutoclickerPower" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+visible = false
 layout_mode = 2
 script = ExtResource("5_a73qu")
 title = "Autoclicker power"
 description = "Increased the strength of your autoclickers"
-cost_curve = SubResource("Curve_jbcvl")
+cost_curve = SubResource("Curve_a73qu")
