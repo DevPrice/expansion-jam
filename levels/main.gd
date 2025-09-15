@@ -108,10 +108,9 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	var zoom_scale := viewport_size / world_span
 	var zoom := minf(zoom_scale.x, zoom_scale.y)
 
-	if zoom < camera.zoom.x:
-		if tween_zoom:
-			var tween := get_tree().create_tween()
-			tween.tween_property(camera, "zoom", Vector2.ONE * zoom, 0.2)
-			tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)
-		else:
-			camera.zoom = Vector2.ONE * zoom
+	if tween_zoom:
+		var tween := get_tree().create_tween()
+		tween.tween_property(camera, "zoom", Vector2.ONE * zoom, 0.2)
+		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)
+	else:
+		camera.zoom = Vector2.ONE * zoom
