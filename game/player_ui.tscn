@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=8 format=3 uid="uid://cxbtq6b3c4wxs"]
 
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
 [ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
@@ -14,7 +14,25 @@ variation_opentype = {
 default_font = SubResource("FontVariation_wgxck")
 default_font_size = 24
 
-[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_text")]
+[sub_resource type="Theme" id="Theme_waps8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgxck"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.4542271, 0.2714553, 0.019989615, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 100000
+corner_radius_top_right = 100000
+corner_radius_bottom_right = 100000
+corner_radius_bottom_left = 100000
+corner_detail = 5
+
+[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_container", "autoclickers_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,8 +41,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_3qdfi")
-points_text = NodePath("MarginContainer/Control/VBoxContainer/PointsLabel")
-autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/AutoclickersLabel")
+points_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer/PointsLabel")
+autoclickers_container = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2")
+autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2/AutoclickersLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -48,18 +67,36 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_vt44r")
 
-[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
-text = "Score: 100"
-fit_content = true
-autowrap_mode = 0
+size_flags_horizontal = 0
+theme = SubResource("Theme_waps8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgxck")
 
-[node name="AutoclickersLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer"]
-visible = false
+[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/PanelContainer"]
 layout_mode = 2
-text = "Autoclickers: 100"
+text = "$ 100"
 fit_content = true
 autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme = SubResource("Theme_waps8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgxck")
+
+[node name="AutoclickersLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+text = "15"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Shop" parent="." instance=ExtResource("2_nw27i")]
 layout_mode = 1
