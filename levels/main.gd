@@ -11,7 +11,7 @@ func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
 	get_viewport().size_changed.disconnect(_window_size_changed)
 
-func _player_joined(controller: PlayerController) -> void:
+func _player_joined(controller: ExpansionPlayerController) -> void:
 	var player := controller.get_local_player()
 	if player_ui_scene and player:
 		player.hud = player_ui_scene.instantiate()
@@ -20,6 +20,8 @@ func _player_joined(controller: PlayerController) -> void:
 		canvas_layer.add_child(player.hud)
 		canvas_layer.layer = 10
 		player.get_viewport().add_child(canvas_layer)
+	controller.camera.enabled = true
+	controller.player_state.autoclick.connect(_autoclick)
 	_init_game()
 	_update_zoom(tilemap.bounds)
 
@@ -35,12 +37,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		_unhandled_click(event)
 
+func _autoclick(count: int) -> void:
+	var state := _get_player_state()
+	# TODO: Optimize
+	for i: int in range(count):
+		var tile: Tile = tilemap.get_children().pick_random()
+		tile.apply_damage(state.get_autoclick_damage())
+
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
 		var cell_pos := _viewport_to_cell_pos(event.position)
 		var tile := tilemap.get_cell_tile(cell_pos)
 		if tile:
-			tile.apply_damage(1.0)
+			var state := _get_player_state()
+			tile.apply_damage(state.get_click_damage())
 			get_viewport().set_input_as_handled()
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
@@ -56,6 +66,10 @@ func _viewport_to_cell_pos(viewport_pos: Vector2) -> Vector2i:
 func _get_tile_at(global_pos: Vector2) -> Node:
 	var map_pos := tilemap.local_to_map(tilemap.to_local(global_pos))
 	return tilemap.get_cell_node(map_pos)
+
+func _get_player_state() -> ExpansionPlayerState:
+	var controller: ExpansionPlayerController = Players.get_primary_controller()
+	return controller.player_state if controller else null
 
 func _bounds_changed(bounds: Rect2i) -> void:
 	_update_zoom(bounds)

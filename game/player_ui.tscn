@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=3 format=3 uid="uid://cxbtq6b3c4wxs"]
 
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
+[ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
 
 [node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text")]
 layout_mode = 3
@@ -20,10 +21,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="Control" type="Control" parent="MarginContainer"]
 layout_mode = 2
@@ -36,3 +37,6 @@ offset_bottom = 23.0
 text = "Score: 100"
 fit_content = true
 autowrap_mode = 0
+
+[node name="Shop" parent="." instance=ExtResource("2_nw27i")]
+layout_mode = 1

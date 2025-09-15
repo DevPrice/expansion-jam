@@ -24,7 +24,7 @@ sources/1 = SubResource("TileSetAtlasSource_qy63d")
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap")]
 script = ExtResource("1_2262g")
-tilemap = NodePath("TileMapLayer")
+tilemap = NodePath("Tiles")
 player_ui_scene = ExtResource("2_m1504")
 
 [node name="Background" type="CanvasLayer" parent="."]
@@ -38,11 +38,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="Tiles" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)
 tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")
 
-[connection signal="bounds_changed" from="TileMapLayer" to="." method="_bounds_changed"]
-[connection signal="tile_destroyed" from="TileMapLayer" to="." method="_tile_destroyed"]
+[connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
+[connection signal="tile_destroyed" from="Tiles" to="." method="_tile_destroyed"]

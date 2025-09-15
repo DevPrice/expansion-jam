@@ -11,5 +11,5 @@ signal destroyed
 func apply_damage(damage: float) -> void:
 	var was_alive := hp > 0
 	hp -= max(0, damage)
-	if was_alive and hp <= 0:
+	if was_alive and is_zero_approx(hp):
 		destroyed.emit()

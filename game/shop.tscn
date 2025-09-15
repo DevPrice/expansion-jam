@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca5e8cpj38a2v"]
+
+[ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
+[ext_resource type="PackedScene" uid="uid://cilynqqcec2rj" path="res://game/merch_button.tscn" id="1_ungis"]
+
+[sub_resource type="Theme" id="Theme_ungis"]
+MarginContainer/constants/margin_bottom = 16
+MarginContainer/constants/margin_left = 16
+MarginContainer/constants/margin_right = 16
+MarginContainer/constants/margin_top = 16
+
+[node name="Shop" type="PanelContainer"]
+custom_minimum_size = Vector2(400, 0)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -232.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_ungis")
+script = ExtResource("1_p41nr")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Button" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+layout_mode = 2
+title = "Auto clicker"
+description = "Automatically clicks one tile every second"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_auto_clicker_purchase"]
