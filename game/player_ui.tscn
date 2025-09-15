@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
 [ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
 
-[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text")]
+[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_3qdfi")
-points_text = NodePath("MarginContainer/Control/PointsLabel")
+points_text = NodePath("MarginContainer/Control/VBoxContainer/PointsLabel")
+autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/AutoclickersLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -30,11 +31,21 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 mouse_filter = 1
 
-[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control"]
-layout_mode = 1
-offset_right = 1.0
-offset_bottom = 23.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
 text = "Score: 100"
+fit_content = true
+autowrap_mode = 0
+
+[node name="AutoclickersLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Autoclickers: 100"
 fit_content = true
 autowrap_mode = 0
 
