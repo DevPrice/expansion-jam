@@ -38,10 +38,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_unhandled_click(event)
 
 func _autoclick(count: int) -> void:
+	if count < 1: return
 	var state := _get_player_state()
-	# TODO: Optimize
-	for i: int in range(count):
-		var tile: Tile = tilemap.get_children().pick_random()
+	var sample := Arrays.sample(tilemap.get_children(), count)
+	for tile: Tile in sample:
 		tile.apply_damage(state.get_autoclick_damage())
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
