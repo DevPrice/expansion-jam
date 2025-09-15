@@ -15,6 +15,3 @@ func _update_buttons(points: float) -> void:
 	for child: Node in _merch_container.get_children():
 		if child is MerchButton:
 			child.disabled = points < child.cost
-
-func _on_auto_clicker_purchase() -> void:
-	_controller.player_state.auto_clickers += 1
