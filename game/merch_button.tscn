@@ -1,12 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cilynqqcec2rj"]
+[gd_scene load_steps=5 format=3 uid="uid://cilynqqcec2rj"]
 
 [ext_resource type="Script" uid="uid://b1wtmyajtgitl" path="res://game/merch_button.gd" id="1_pexkm"]
+[ext_resource type="FontFile" uid="uid://b18iuu1gfh1d3" path="res://content/fonts/Quicksand-SemiBold.ttf" id="2_612un"]
 
 [sub_resource type="Theme" id="Theme_muqko"]
 MarginContainer/constants/margin_bottom = 16
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
+
+[sub_resource type="Theme" id="Theme_uhhv5"]
+default_font = ExtResource("2_612un")
+default_font_size = 20
 
 [node name="Button" type="Button" node_paths=PackedStringArray("_title_label", "_description_label", "_cost_label")]
 custom_minimum_size = Vector2(200, 80)
@@ -35,17 +40,18 @@ theme_override_constants/separation = 6
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
+theme = SubResource("Theme_uhhv5")
 text = "Title"
 fit_content = true
 
 [node name="Cost" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 mouse_filter = 1
-text = "$100"
+text = "$ 100"
 fit_content = true
 autowrap_mode = 0
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Description" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

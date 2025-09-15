@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=6 format=3 uid="uid://cxbtq6b3c4wxs"]
 
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
 [ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
+[ext_resource type="FontFile" uid="uid://b18iuu1gfh1d3" path="res://content/fonts/Quicksand-SemiBold.ttf" id="2_waps8"]
+
+[sub_resource type="FontVariation" id="FontVariation_wgxck"]
+base_font = ExtResource("2_waps8")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="Theme" id="Theme_vt44r"]
+default_font = SubResource("FontVariation_wgxck")
+default_font_size = 24
 
 [node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_text")]
 layout_mode = 3
@@ -35,6 +46,7 @@ mouse_filter = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = SubResource("Theme_vt44r")
 
 [node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer"]
 layout_mode = 2
