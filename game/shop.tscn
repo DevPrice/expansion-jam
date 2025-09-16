@@ -61,7 +61,7 @@ cost_curve = SubResource("Curve_jbcvl")
 [node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("unlock_on_purchase") instance=ExtResource("1_ungis")]
 layout_mode = 2
 script = ExtResource("3_jbcvl")
-title = "Auto clicker"
+title = "Auto-clicker"
 description = "Automatically clicks one tile every second"
 cost_curve = SubResource("Curve_p41nr")
 unlock_on_purchase = [NodePath("../AutoclickerPower")]
@@ -70,6 +70,6 @@ unlock_on_purchase = [NodePath("../AutoclickerPower")]
 visible = false
 layout_mode = 2
 script = ExtResource("5_a73qu")
-title = "Autoclicker power"
+title = "Auto-clicker power"
 description = "Increased the strength of your autoclickers"
 cost_curve = SubResource("Curve_a73qu")
