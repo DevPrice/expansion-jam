@@ -1,6 +1,7 @@
 extends PanelContainer
 
 @export var _merch_container: Control
+@export var _point_unlocks: Array[MerchUnlock]
 
 @onready var _controller: ExpansionPlayerController = Controller.get_instigator(self)
 
@@ -10,6 +11,10 @@ func _ready() -> void:
 
 func _points_changed(points: float) -> void:
 	_update_buttons(points)
+	for unlock: MerchUnlock in _point_unlocks:
+		if unlock and points >= unlock.level:
+			var node := get_node_or_null(unlock.unlock)
+			if node: node.visible = true
 
 func _update_buttons(points: float) -> void:
 	for child: Node in _merch_container.get_children():

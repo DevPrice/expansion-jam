@@ -3,6 +3,7 @@ class_name ExpansionPlayerState extends Node
 signal points_changed(points: float)
 signal autoclickers_changed(autoclickers: int)
 signal autoclick(numclicks: int)
+signal show_stats
 
 @export var bonus_damage: float = 0.0
 @export var damage_amp: float = 1.0

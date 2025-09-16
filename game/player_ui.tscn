@@ -28,7 +28,7 @@ corner_radius_bottom_right = 100000
 corner_radius_bottom_left = 100000
 corner_detail = 5
 
-[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_container", "autoclickers_text")]
+[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,9 +38,11 @@ grow_vertical = 2
 focus_behavior_recursive = 1
 mouse_filter = 1
 script = ExtResource("1_3qdfi")
-points_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer/PointsLabel")
+points_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer/PointsLabel")
 autoclickers_container = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2")
 autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2/AutoclickersLabel")
+stat_tracker_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2/PointsPerSecondLabel")
+stat_tracker_control = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -64,7 +66,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_vt44r")
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
@@ -72,9 +77,25 @@ size_flags_horizontal = 0
 theme = SubResource("Theme_waps8")
 theme_override_styles/panel = SubResource("StyleBoxFlat_wgxck")
 
-[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/PanelContainer"]
+[node name="PointsLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 text = "$ 100"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme = SubResource("Theme_waps8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgxck")
+
+[node name="PointsPerSecondLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
 fit_content = true
 autowrap_mode = 0
 horizontal_alignment = 1
@@ -98,3 +119,8 @@ vertical_alignment = 1
 [node name="Shop" parent="." instance=ExtResource("2_nw27i")]
 layout_mode = 1
 offset_left = 0.0
+
+[node name="StatTrackTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="StatTrackTimer" to="." method="_update_stats"]

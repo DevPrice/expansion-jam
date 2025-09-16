@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=21 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="PackedScene" uid="uid://cilynqqcec2rj" path="res://game/merch_button.tscn" id="1_ungis"]
 [ext_resource type="Script" uid="uid://cakaffo3xhjtu" path="res://game/merch_autoclicker.gd" id="3_jbcvl"]
 [ext_resource type="Script" uid="uid://3t7yawoeftcg" path="res://game/merch_click_power.gd" id="4_5oa2q"]
 [ext_resource type="Script" uid="uid://dp8wkd836hs30" path="res://game/merch_unlocks.gd" id="4_itk1t"]
+[ext_resource type="Script" uid="uid://dwjh72ryqudx" path="res://game/merch_point_stats.gd" id="5_13mum"]
 [ext_resource type="Script" uid="uid://de03derx5hhs5" path="res://game/merch_autoclicker_power.gd" id="5_a73qu"]
 [ext_resource type="Script" uid="uid://cytra0h2rx6wi" path="res://game/merch_reach.gd" id="6_tpr7e"]
 [ext_resource type="Script" uid="uid://ctgn8vmy2fj1q" path="res://game/merch_destroy_bonus.gd" id="7_ew5oi"]
@@ -14,6 +15,12 @@ MarginContainer/constants/margin_bottom = 16
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
+
+[sub_resource type="Resource" id="Resource_wjx1w"]
+script = ExtResource("4_itk1t")
+level = 10000
+unlock = NodePath("ScrollContainer/MarginContainer/VBoxContainer/PointStats")
+metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_jbcvl"]
 _limits = [0.0, 10000.0, 0.0, 5.0]
@@ -75,6 +82,7 @@ grow_vertical = 2
 theme = SubResource("Theme_ungis")
 script = ExtResource("1_p41nr")
 _merch_container = NodePath("ScrollContainer/MarginContainer/VBoxContainer")
+_point_unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_wjx1w")])
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -94,6 +102,15 @@ description = "Increase the strength of your clicks"
 cost = 0.0
 cost_curve = SubResource("Curve_jbcvl")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ew5oi"), SubResource("Resource_tqf2i"), SubResource("Resource_itk1t")])
+
+[node name="PointStats" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+visible = false
+layout_mode = 2
+script = ExtResource("5_13mum")
+title = "Stat tracker"
+description = "Track your average $ per second"
+cost = 999.0
+unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
 visible = false
