@@ -30,5 +30,8 @@ func get_click_damage() -> float:
 func get_autoclick_damage() -> float:
 	return (1.0 + autoclicker_bonus_damage) * autoclicker_damage_amp
 
+func enable_stat_tracking() -> void:
+	show_stats.emit()
+
 func _autoclick_timer() -> void:
 	autoclick.emit(autoclickers)
