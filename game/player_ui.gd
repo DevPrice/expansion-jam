@@ -37,7 +37,7 @@ func _update_points() -> void:
 	if not _points_dirty: return
 	_points_dirty = false
 	var points := _dirty_points
-	if abs(points - _displayed_score) > 2 and is_inside_tree():
+	if absf(points - _displayed_score) > 2 and is_inside_tree():
 		var tween_duration := clampf(abs(_log10(points) - _log10(_displayed_score)) * .5, .15, 2.0)
 		var tween := get_tree().create_tween()
 		tween.tween_property(self, "_displayed_score", points, tween_duration)

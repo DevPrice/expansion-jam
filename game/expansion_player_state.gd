@@ -19,10 +19,8 @@ signal show_stats
 
 @export var points: float = 0.0:
 	set(value):
-		var prev_value := points
 		points = value
-		if not is_equal_approx(prev_value, value):
-			points_changed.emit(points)
+		points_changed.emit(points)
 
 func get_click_damage() -> float:
 	return (1.0 + bonus_damage) * damage_amp
