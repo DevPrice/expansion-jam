@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=19 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="PackedScene" uid="uid://cilynqqcec2rj" path="res://game/merch_button.tscn" id="1_ungis"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dp8wkd836hs30" path="res://game/merch_unlocks.gd" id="4_itk1t"]
 [ext_resource type="Script" uid="uid://de03derx5hhs5" path="res://game/merch_autoclicker_power.gd" id="5_a73qu"]
 [ext_resource type="Script" uid="uid://cytra0h2rx6wi" path="res://game/merch_reach.gd" id="6_tpr7e"]
+[ext_resource type="Script" uid="uid://ctgn8vmy2fj1q" path="res://game/merch_destroy_bonus.gd" id="7_ew5oi"]
 
 [sub_resource type="Theme" id="Theme_ungis"]
 MarginContainer/constants/margin_bottom = 16
@@ -22,6 +23,12 @@ point_count = 3
 [sub_resource type="Resource" id="Resource_ew5oi"]
 script = ExtResource("4_itk1t")
 unlock = NodePath("../Autoclicker")
+metadata/_custom_type_script = "uid://dp8wkd836hs30"
+
+[sub_resource type="Resource" id="Resource_tqf2i"]
+script = ExtResource("4_itk1t")
+level = 1
+unlock = NodePath("../DestroyBonus")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Resource" id="Resource_itk1t"]
@@ -44,6 +51,11 @@ metadata/_custom_type_script = "uid://dp8wkd836hs30"
 [sub_resource type="Curve" id="Curve_a73qu"]
 _limits = [0.0, 2500.0, 0.0, 20.0]
 _data = [Vector2(0, 1000), 0.0, 2700.0, 0, 1, Vector2(20, 55000), 2700.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ew5oi"]
+_limits = [0.0, 20000.0, 0.0, 10.0]
+_data = [Vector2(0, 125), 0.0, 0.0, 0, 0, Vector2(10, 8500), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tpr7e"]
@@ -81,7 +93,7 @@ title = "Click power"
 description = "Increase the strength of your clicks"
 cost = 0.0
 cost_curve = SubResource("Curve_jbcvl")
-unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ew5oi"), SubResource("Resource_itk1t")])
+unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ew5oi"), SubResource("Resource_tqf2i"), SubResource("Resource_itk1t")])
 
 [node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
 visible = false
@@ -101,6 +113,16 @@ title = "Auto-clicker power"
 description = "Increased the strength of your autoclickers"
 cost = 0.0
 cost_curve = SubResource("Curve_a73qu")
+unlocks = Array[ExtResource("4_itk1t")]([])
+
+[node name="DestroyBonus" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+visible = false
+layout_mode = 2
+script = ExtResource("7_ew5oi")
+title = "Tile bonus"
+description = "Gain additional $ when a tile is destroyed"
+cost = 0.0
+cost_curve = SubResource("Curve_ew5oi")
 unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="ClickReach" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
