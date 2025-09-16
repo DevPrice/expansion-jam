@@ -53,13 +53,18 @@ func _autoclick(count: int) -> void:
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
+		var state := _get_player_state()
 		var cell_pos := _viewport_to_cell_pos(event.position)
-		var tile := tilemap.get_cell_tile(cell_pos)
-		if tile:
-			var state := _get_player_state()
-			tile.apply_damage(state.get_click_damage())
-			_damage_effect(tile, _viewport_to_global_pos(event.position))
-			get_viewport().set_input_as_handled()
+		for dx: int in range(-state.reach, state.reach + 1):
+			for dy: int in range(-state.reach, state.reach + 1):
+				var tile := tilemap.get_cell_tile(cell_pos + Vector2i(dx, dy))
+				if tile:
+					tile.apply_damage(state.get_click_damage())
+					if dx == 0 and dy == 0:
+						_damage_effect(tile, _viewport_to_global_pos(event.position))
+					else:
+						_damage_effect(tile)
+		get_viewport().set_input_as_handled()
 
 func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()

@@ -1,5 +1,4 @@
 extends MerchButton
 
 func _purchased() -> void:
-	# TODO
-	pass
+	_controller.player_state.reach += 1

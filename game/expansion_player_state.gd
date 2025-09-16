@@ -7,6 +7,7 @@ signal autoclick(numclicks: int)
 @export var bonus_damage: float = 0.0
 @export var damage_amp: float = 1.0
 @export var tile_bonus: float = 0.0
+@export var reach: int = 0
 
 @export var autoclickers: int = 0:
 	set(value):
