@@ -77,4 +77,4 @@ class PointTracker:
 		var size := _buffer.size()
 		if size == 0: return 0.0
 		if size == 1: return _buffer[0]
-		return (_buffer[size - 1] - _buffer[0]) / size
+		return (_buffer[size - 1] - _buffer[0]) / (size - 1)
