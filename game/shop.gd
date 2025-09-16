@@ -5,7 +5,7 @@ extends PanelContainer
 @onready var _controller: ExpansionPlayerController = Controller.get_instigator(self)
 
 func _ready() -> void:
-	_controller.player_state.points_changed.connect(_points_changed)
+	_controller.player_state.points_changed.connect(_points_changed, CONNECT_DEFERRED)
 	_update_buttons(_controller.player_state.points)
 
 func _points_changed(points: float) -> void:
