@@ -2,6 +2,7 @@ extends Node2D
 
 @export var tilemap: GameTileMap
 @export var player_ui_scene: PackedScene
+@export var damage_particles_scene: PackedScene
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
@@ -48,6 +49,7 @@ func _autoclick(count: int) -> void:
 	var sample := Arrays.sample(tilemap.get_children(), count)
 	for tile: Tile in sample:
 		tile.apply_damage(state.get_autoclick_damage())
+		_damage_effect(tile)
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
@@ -56,7 +58,15 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 		if tile:
 			var state := _get_player_state()
 			tile.apply_damage(state.get_click_damage())
+			_damage_effect(tile, _viewport_to_global_pos(event.position))
 			get_viewport().set_input_as_handled()
+
+func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+	var particles: GPUParticles2D = damage_particles_scene.instantiate()
+	particles.global_position = location
+	add_child(particles)
+	particles.emitting = true
+	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
