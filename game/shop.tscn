@@ -45,9 +45,9 @@ unlock = NodePath("../ClickReach")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_p41nr"]
-_limits = [0.0, 1000000.0, 0.0, 250.0]
-_data = [Vector2(0, 250), 0.0, 195.0, 0, 1, Vector2(50, 10000), 195.0, 6600.0, 1, 1, Vector2(200, 1000000), 6600.0, 0.0, 1, 0]
-point_count = 3
+_limits = [0.0, 100000.0, 0.0, 2000.0]
+_data = [Vector2(0, 50), 0.0, 35.275, 0, 1, Vector2(2000, 70600), 35.275, 48.766666, 1, 1]
+point_count = 2
 metadata/_snap_count = 14
 
 [sub_resource type="Resource" id="Resource_13mum"]
