@@ -20,6 +20,10 @@ script = ExtResource("1_pexkm")
 _title_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Title")
 _description_label = NodePath("MarginContainer/VBoxContainer/Description")
 _cost_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Cost")
+title = null
+description = null
+cost = null
+unlocks = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
