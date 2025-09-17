@@ -26,6 +26,10 @@ Players="*res://addons/player_controller/scenes/players.tscn"
 Net="*res://addons/net/net.gd"
 Console="*res://addons/dev_console/dev_console.gd"
 
+[debug]
+
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=1280

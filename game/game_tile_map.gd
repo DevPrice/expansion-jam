@@ -25,7 +25,7 @@ func _child_entered(child: Node) -> void:
 	if child is Tile:
 		var cell_pos := local_to_map(child.position)
 		var distance := maxi(abs(cell_pos.x), abs(cell_pos.y))
-		child.hp = maxf(distance, 1)
+		child.hp = maxf(distance, 1) * maxf(1.0, pow(2, distance / 8.0))
 		child.damaged.connect(_tile_damaged.bind(child))
 		child.destroyed.connect(_tile_destroyed.bind(child))
 
