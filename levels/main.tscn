@@ -13,11 +13,9 @@
 shader = ExtResource("2_l8qe7")
 shader_parameter/gradient_colors = PackedColorArray(0.9497126, 0.5941715, 0.27942315, 1, 0.6724502, 0.16953614, 0, 1, 0.73669446, 0.11695636, 0.046534494, 1)
 shader_parameter/grid_size = 0.025
-shader_parameter/circle_base = -0.25
+shader_parameter/circle_base = -0.15
 shader_parameter/circle_growth = 0.75
 shader_parameter/circle_speed = Vector2(-0.2, -0.2)
-shader_parameter/line_width = 0.25
-shader_parameter/line_spacing = 1.2
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2262g"]
 scenes/1/scene = ExtResource("2_wdj6m")
