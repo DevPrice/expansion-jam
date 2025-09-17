@@ -1,13 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://dk4r11aytipf"]
+[gd_scene load_steps=13 format=3 uid="uid://dk4r11aytipf"]
 
 [ext_resource type="Shader" uid="uid://x7drrf7iqx0e" path="res://content/shaders/shape.gdshader" id="1_7cios"]
 [ext_resource type="Script" uid="uid://bfmsmxbad4ttw" path="res://game/tile.gd" id="1_ifppd"]
 [ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ifppd"]
+noise_type = 3
+frequency = 0.003
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qljeg"]
+noise = SubResource("FastNoiseLite_ifppd")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_ifppd"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qljeg"]
+noise_type = 2
+frequency = 0.031
+fractal_octaves = 1
+cellular_distance_function = 1
+cellular_return_type = 6
+domain_warp_amplitude = 20.0
+domain_warp_frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3ok0"]
+noise = SubResource("FastNoiseLite_qljeg")
+color_ramp = SubResource("Gradient_ifppd")
+seamless = true
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qljeg"]
 shader = ExtResource("1_7cios")
+shader_parameter/voronoi = SubResource("NoiseTexture2D_j3ok0")
+shader_parameter/perlin = SubResource("NoiseTexture2D_qljeg")
 shader_parameter/tint = Color(0.9984512, 0.9628398, 0.93051696, 1)
-shader_parameter/shape_tint = Color(0.86, 0.38785997, 0.3354, 1)
+shader_parameter/damage_tint = Color(0.85882354, 0.3882353, 0.3372549, 1)
 shader_parameter/edge = 0.5
 shader_parameter/smoothing = 0.05
 shader_parameter/translation_speed = Vector2(0.1, 0.2)
@@ -82,6 +109,8 @@ _animation_player = NodePath("AnimationPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_qljeg")
+instance_shader_parameters/damage = 0.0
+instance_shader_parameters/instance_id = 0
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 8.0
