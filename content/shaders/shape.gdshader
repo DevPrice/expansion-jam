@@ -31,7 +31,7 @@ void fragment() {
 	vec2 p = vec2(UV.x, -UV.y) - .5f * TIME * translation_speed * vec2(1.f, -1.f);
 	vec2 q = p - shape_spacing * round(p / shape_spacing);
 	float light_mask = smoothstep(.5f, .75f, s);
-	float shape = remap(sign(sdPentagram(q, shape_spacing * shape_size) * light_mask), -1.f, 1.f, 1.f, 0.f);
-	vec3 c = mix(tint, shape_tint, shape);
+	float shape = remap(sign(sdCircle(q, shape_spacing * shape_size) * light_mask), -1.f, 1.f, 1.f, 0.f);
+	vec3 c = mix(tint, shape_tint, 0.f);
 	COLOR = vec4(c * s, alpha);
 }

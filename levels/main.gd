@@ -3,6 +3,7 @@ extends Node2D
 @export var tilemap: GameTileMap
 @export var player_ui_scene: PackedScene
 @export var damage_particles_scene: PackedScene
+@export var destroy_particles_scene: PackedScene
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
@@ -34,10 +35,11 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 	if not controller: return
 	controller.player_state.points += damage * tile.point_value
 
-func _tile_destroyed(_tile: Tile) -> void:
+func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	controller.player_state.points += controller.player_state.tile_bonus
+	_destroy_effect(tile)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
@@ -68,6 +70,13 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 
 func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
+	particles.global_position = location
+	add_child(particles)
+	particles.emitting = true
+	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
+
+func _destroy_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
 	particles.global_position = location
 	add_child(particles)
 	particles.emitting = true

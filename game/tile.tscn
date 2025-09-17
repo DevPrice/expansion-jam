@@ -6,14 +6,41 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qljeg"]
 shader = ExtResource("1_7cios")
-shader_parameter/tint = Color(0.98039216, 0.70980394, 0.4392157, 1)
-shader_parameter/shape_tint = Color(0.70188653, 0.34628996, 0.0326854, 1)
+shader_parameter/tint = Color(0.9984512, 0.9628398, 0.93051696, 1)
+shader_parameter/shape_tint = Color(0.86, 0.38785997, 0.3354, 1)
 shader_parameter/edge = 0.5
 shader_parameter/smoothing = 0.05
-shader_parameter/translation_speed = Vector2(0.1, 0.05)
+shader_parameter/translation_speed = Vector2(0.1, 0.2)
 shader_parameter/shape_spacing = 0.29
-shader_parameter/shape_size = 0.35
+shader_parameter/shape_size = 0.58
 shader_parameter/shadow_size = Vector2(0, 0.08)
+
+[sub_resource type="Animation" id="Animation_qljeg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-8, -8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_ifppd"]
 resource_name = "damage"
@@ -41,33 +68,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.04363323129985824, 0.0, -0.03490658503988659, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_qljeg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-8, -8)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j3ok0"]
