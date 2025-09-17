@@ -1,6 +1,7 @@
 class_name ExpansionPlayerState extends Node
 
 signal points_changed(points: float)
+signal total_points_earned_changed(points: float)
 signal autoclickers_changed(autoclickers: int)
 signal autoclick(numclicks: int)
 signal show_stats
@@ -19,8 +20,16 @@ signal show_stats
 
 @export var points: float = 0.0:
 	set(value):
+		var diff = value - points
 		points = value
 		points_changed.emit(points)
+		if diff > 0:
+			total_points_earned += diff
+
+@export var total_points_earned: float = 0.0:
+	set(value):
+		total_points_earned = value
+		total_points_earned_changed.emit(points)
 
 func get_click_damage() -> float:
 	return (1.0 + bonus_damage) * damage_amp

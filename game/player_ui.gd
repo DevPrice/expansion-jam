@@ -57,7 +57,7 @@ func _log10(x: float) -> float:
 
 func _update_stats() -> void:
 	var controller: ExpansionPlayerController = Controller.get_instigator(self)
-	_point_tracker.add_sample(controller.player_state.points)
+	_point_tracker.add_sample(controller.player_state.total_points_earned)
 
 class PointTracker:
 
