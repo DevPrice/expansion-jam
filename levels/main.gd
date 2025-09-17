@@ -85,8 +85,8 @@ func _destroy_effect(tile: Tile, location: Vector2 = tile.global_position) -> vo
 func _viewport_to_global_pos(viewport_pos: Vector2) -> Vector2:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return viewport_pos
-	var center_relative := viewport_pos - get_viewport_rect().size * .5
-	return (center_relative / controller.camera.zoom) * controller.camera.global_transform.affine_inverse()
+	var center_relative := (viewport_pos + controller.camera.offset * controller.camera.zoom) - get_viewport_rect().size * .5
+	return ((center_relative) / controller.camera.zoom) * controller.camera.global_transform.affine_inverse()
 
 func _viewport_to_cell_pos(viewport_pos: Vector2) -> Vector2i:
 	var global_pos := _viewport_to_global_pos(viewport_pos)
@@ -113,6 +113,8 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	var tile_bounds := tilemap.bounds.grow(2)
 	var tile_size := tilemap.tile_set.tile_size
 	var viewport_size := Vector2(camera.get_viewport().size)
+	var shop_width: float = controller.get_hud().get_node("Shop").size.x
+	viewport_size.x -= shop_width
 
 	var world_bounds := Rect2(
 		tile_bounds.position * tile_size,
@@ -138,3 +140,4 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SPRING)
 	else:
 		camera.zoom = Vector2.ONE * zoom
+	camera.offset.x = shop_width * .5 / zoom
