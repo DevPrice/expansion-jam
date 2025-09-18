@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=24 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
+[ext_resource type="Shader" uid="uid://bdhgvfsb7hf6k" path="res://content/shaders/background_blur.gdshader" id="1_tqf2i"]
 [ext_resource type="PackedScene" uid="uid://cilynqqcec2rj" path="res://game/merch_button.tscn" id="1_ungis"]
 [ext_resource type="Script" uid="uid://cakaffo3xhjtu" path="res://game/merch_autoclicker.gd" id="3_jbcvl"]
 [ext_resource type="Script" uid="uid://3t7yawoeftcg" path="res://game/merch_click_power.gd" id="4_5oa2q"]
@@ -10,11 +11,24 @@
 [ext_resource type="Script" uid="uid://cytra0h2rx6wi" path="res://game/merch_reach.gd" id="6_tpr7e"]
 [ext_resource type="Script" uid="uid://ctgn8vmy2fj1q" path="res://game/merch_destroy_bonus.gd" id="7_ew5oi"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wjx1w"]
+shader = ExtResource("1_tqf2i")
+shader_parameter/tint = Color(0.101960786, 0.101960786, 0.101960786, 0.6)
+shader_parameter/blur_level = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqf2i"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+
 [sub_resource type="Theme" id="Theme_ungis"]
 MarginContainer/constants/margin_bottom = 16
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_tqf2i")
 
 [sub_resource type="Resource" id="Resource_wjx1w"]
 script = ExtResource("4_itk1t")
@@ -71,6 +85,7 @@ _data = [Vector2(0, 800), 0.0, 0.0, 0, 0, Vector2(1, 2400), 0.0, 0.0, 0, 0, Vect
 point_count = 5
 
 [node name="Shop" type="PanelContainer" node_paths=PackedStringArray("_merch_container")]
+material = SubResource("ShaderMaterial_wjx1w")
 custom_minimum_size = Vector2(400, 0)
 anchors_preset = 11
 anchor_left = 1.0

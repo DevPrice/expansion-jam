@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
-[ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://levels/background.gdshader" id="2_l8qe7"]
+[ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://content/shaders/background.gdshader" id="2_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://cxbtq6b3c4wxs" path="res://game/player_ui.tscn" id="2_m1504"]
 [ext_resource type="PackedScene" uid="uid://dk4r11aytipf" path="res://game/tile.tscn" id="2_wdj6m"]
 [ext_resource type="PackedScene" uid="uid://cpfp6725ej4av" path="res://game/destroy_particles.tscn" id="4_6et1j"]
