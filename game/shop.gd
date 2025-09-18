@@ -7,12 +7,16 @@ extends PanelContainer
 
 func _ready() -> void:
 	_controller.player_state.points_changed.connect(_points_changed, CONNECT_DEFERRED)
+	_controller.player_state.total_points_earned_changed.connect(_handle_unlocks, CONNECT_DEFERRED)
 	_update_buttons(_controller.player_state.points)
+	_handle_unlocks(_controller.player_state.total_points_earned)
 
 func _points_changed(points: float) -> void:
 	_update_buttons(points)
+
+func _handle_unlocks(total_points_earned: float) -> void:
 	for unlock: MerchUnlock in _point_unlocks:
-		if unlock and points >= unlock.level:
+		if unlock and total_points_earned >= unlock.level:
 			var node := get_node_or_null(unlock.unlock)
 			if node: node.visible = true
 

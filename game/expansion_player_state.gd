@@ -29,7 +29,7 @@ signal show_stats
 @export var total_points_earned: float = 0.0:
 	set(value):
 		total_points_earned = value
-		total_points_earned_changed.emit(points)
+		total_points_earned_changed.emit(total_points_earned)
 
 func _physics_process(_delta: float) -> void:
 	if autoclickers <= 0: return
