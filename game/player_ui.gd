@@ -10,10 +10,12 @@ extends Control
 var _displayed_score: float:
 	set(value):
 		_displayed_score = value
-		points_text.text = "$ %s" % NumFormat.format_points(value)
+		points_text.text = "$ %s" % NumFormat.format_points(floorf(value))
 
 var _points_dirty: bool
 var _dirty_points: float
+
+var _allow_points_shrink: bool
 
 var _point_tracker := PointTracker.new()
 
@@ -22,7 +24,12 @@ func _notification(what: int) -> void:
 		Controller.NOTIFICATION_POSSESSED: _possessed(Controller.get_instigator(self))
 
 func _process(_delta: float) -> void:
-	points_container.custom_minimum_size = points_container.size
+	if _allow_points_shrink:
+		print('allowin')
+		points_container.size.x = 0.0
+		points_container.custom_minimum_size.x = 0.0
+	else:
+		points_container.custom_minimum_size.x = points_container.size.x
 
 func _possessed(controller: ExpansionPlayerController) -> void:
 	_updated_points_deferred(controller.player_state.points)
@@ -41,7 +48,9 @@ func _update_points() -> void:
 	if not _points_dirty: return
 	_points_dirty = false
 	var points := _dirty_points
-	if absf(points - _displayed_score) > 2 and is_inside_tree():
+	var diff := points - _displayed_score
+	_allow_points_shrink = diff < 0
+	if absf(diff) > 2 and is_inside_tree():
 		var tween_duration := clampf(abs(_log10(points) - _log10(_displayed_score)) * .5, .15, 2.0)
 		var tween := get_tree().create_tween()
 		tween.tween_property(self, "_displayed_score", points, tween_duration)

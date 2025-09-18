@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=30 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="Shader" uid="uid://bdhgvfsb7hf6k" path="res://content/shaders/background_blur.gdshader" id="1_tqf2i"]
@@ -92,6 +92,11 @@ _limits = [0.0, 100000000.0, 0.0, 10.0]
 _data = [Vector2(0, 100000), 0.0, 7990000.0, 0, 1, Vector2(10, 80000000), 7990000.0, 0.0, 1, 0]
 point_count = 2
 
+[sub_resource type="Resource" id="Resource_ofsnm"]
+script = ExtResource("4_itk1t")
+unlock = NodePath("../AutoclickerPowerHarvesting")
+metadata/_custom_type_script = "uid://dp8wkd836hs30"
+
 [sub_resource type="Curve" id="Curve_tcepo"]
 _limits = [0.0, 2500000000.0, 0.0, 10.0]
 _data = [Vector2(0, 100000000), 0.0, 240000000.0, 0, 1, Vector2(10, 2500000000), 240000000.0, 0.0, 1, 0]
@@ -183,12 +188,13 @@ title = "Auto-clicker harvesting"
 description = "Gain an additional auto-clicker when a tile is destroyed"
 cost = 0.0
 cost_curve = SubResource("Curve_tqf2i")
-unlocks = Array[ExtResource("4_itk1t")]([])
+unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ofsnm")])
 
 [node name="AutoclickerPowerHarvesting" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+visible = false
 layout_mode = 2
 script = ExtResource("11_tcepo")
-title = "Auto-clicker power harvesting"
+title = "Power harvesting"
 description = "Gain auto-clicker power when a tile is destroyed"
 cost_curve = SubResource("Curve_tcepo")
 unlocks = Array[ExtResource("4_itk1t")]([])
