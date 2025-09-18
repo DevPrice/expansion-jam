@@ -39,6 +39,7 @@ func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	controller.player_state.points += controller.player_state.tile_bonus
+	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	_destroy_effect(tile)
 
 func _unhandled_input(event: InputEvent) -> void:
