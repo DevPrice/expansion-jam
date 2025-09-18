@@ -13,6 +13,11 @@ func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
 	get_viewport().size_changed.disconnect(_window_size_changed)
 
+func _ready() -> void:
+	# Warm these up to avoid stutter on first click
+	_damage_effect(Vector2(10000000000.0, 0.0))
+	_destroy_effect(Vector2(10000000000.0, 0.0))
+
 func _physics_process(_delta: float) -> void:
 	_particles_this_frame = 0
 
@@ -44,7 +49,7 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.points += controller.player_state.tile_bonus
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
-	_destroy_effect(tile)
+	_destroy_effect(tile.global_position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
@@ -57,7 +62,7 @@ func _autoclick(count: int) -> void:
 	sample.shuffle()
 	for tile: Tile in sample:
 		tile.apply_damage(state.get_autoclick_damage())
-		_damage_effect(tile)
+		_damage_effect(tile.global_position)
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
@@ -69,15 +74,15 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 				if tile:
 					tile.apply_damage(state.get_click_damage())
 					if dx == 0 and dy == 0:
-						_damage_effect(tile, _viewport_to_global_pos(event.position))
+						_damage_effect(_viewport_to_global_pos(event.position))
 					else:
-						_damage_effect(tile)
+						_damage_effect(tile.global_position)
 		get_viewport().set_input_as_handled()
 
 # TODO: Do something smarter to optimize this
 var _particles_this_frame: int = 0
 const _max_particles_per_frame: int = 10
-func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+func _damage_effect(location: Vector2) -> void:
 	if _particles_this_frame > _max_particles_per_frame: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
@@ -86,7 +91,7 @@ func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> voi
 	particles.emitting = true
 	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 
-func _destroy_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+func _destroy_effect(location: Vector2) -> void:
 	if _particles_this_frame > _max_particles_per_frame: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
