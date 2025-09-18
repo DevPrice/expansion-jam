@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=29 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="Shader" uid="uid://bdhgvfsb7hf6k" path="res://content/shaders/background_blur.gdshader" id="1_tqf2i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cytra0h2rx6wi" path="res://game/merch_reach.gd" id="6_tpr7e"]
 [ext_resource type="Script" uid="uid://ctgn8vmy2fj1q" path="res://game/merch_destroy_bonus.gd" id="7_ew5oi"]
 [ext_resource type="Script" uid="uid://dpsajbcrm7jjt" path="res://game/merch_autoclicker_harvesting.gd" id="10_wjx1w"]
+[ext_resource type="Script" uid="uid://s117hjg8sbrx" path="res://game/merch_autoclicker_power_harvesting.gd" id="11_tcepo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjx1w"]
 shader = ExtResource("1_tqf2i")
@@ -60,8 +61,8 @@ unlock = NodePath("../ClickReach")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_p41nr"]
-_limits = [0.0, 100000.0, 0.0, 2000.0]
-_data = [Vector2(0, 50), 0.0, 35.275, 0, 1, Vector2(2000, 70600), 35.275, 48.766666, 1, 1]
+_limits = [0.0, 3530.0, 0.0, 100.0]
+_data = [Vector2(0, 50), 0.0, 34.8, 0, 1, Vector2(100, 3530), 34.8, 35.3, 1, 1]
 point_count = 2
 metadata/_snap_count = 14
 
@@ -71,7 +72,7 @@ unlock = NodePath("../AutoclickerPower")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_a73qu"]
-_limits = [0.0, 2500.0, 0.0, 20.0]
+_limits = [0.0, 55000.0, 0.0, 20.0]
 _data = [Vector2(0, 1000), 0.0, 2700.0, 0, 1, Vector2(20, 55000), 2700.0, 0.0, 1, 0]
 point_count = 2
 
@@ -89,6 +90,11 @@ metadata/_custom_type_script = "uid://dp8wkd836hs30"
 [sub_resource type="Curve" id="Curve_tqf2i"]
 _limits = [0.0, 100000000.0, 0.0, 10.0]
 _data = [Vector2(0, 100000), 0.0, 7990000.0, 0, 1, Vector2(10, 80000000), 7990000.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_tcepo"]
+_limits = [0.0, 2500000000.0, 0.0, 10.0]
+_data = [Vector2(0, 100000000), 0.0, 240000000.0, 0, 1, Vector2(10, 2500000000), 240000000.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tpr7e"]
@@ -177,6 +183,14 @@ title = "Auto-clicker harvesting"
 description = "Gain an additional auto-clicker when a tile is destroyed"
 cost = 0.0
 cost_curve = SubResource("Curve_tqf2i")
+unlocks = Array[ExtResource("4_itk1t")]([])
+
+[node name="AutoclickerPowerHarvesting" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+layout_mode = 2
+script = ExtResource("11_tcepo")
+title = "Auto-clicker power harvesting"
+description = "Gain auto-clicker power when a tile is destroyed"
+cost_curve = SubResource("Curve_tcepo")
 unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="ClickReach" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]

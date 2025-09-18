@@ -50,7 +50,7 @@ func _update_points() -> void:
 		_displayed_score = points
 
 func _update_autoclickers(autoclickers: int) -> void:
-	autoclickers_text.text = "Auto-clickers: %s" % autoclickers
+	autoclickers_text.text = "Auto-clickers: %s" % NumFormat.format_points(autoclickers)
 	autoclickers_container.visible = autoclickers > 0
 
 func _update_point_stats(avg_points: float) -> void:

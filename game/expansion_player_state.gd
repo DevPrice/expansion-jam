@@ -32,6 +32,7 @@ signal show_stats
 		total_points_earned_changed.emit(total_points_earned)
 
 @export var autoclicker_harvest: int = 0
+@export var autoclicker_power_harvest: int = 0
 
 func _physics_process(_delta: float) -> void:
 	if autoclickers <= 0: return
