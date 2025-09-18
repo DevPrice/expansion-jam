@@ -87,8 +87,8 @@ unlock = NodePath("../AutoclickerHarvesting")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_tqf2i"]
-_limits = [0.0, 1000000.0, 0.0, 10.0]
-_data = [Vector2(0, 25000), 0.0, 47500.0, 0, 1, Vector2(10, 500000), 47500.0, 0.0, 1, 0]
+_limits = [0.0, 100000000.0, 0.0, 10.0]
+_data = [Vector2(0, 100000), 0.0, 7990000.0, 0, 1, Vector2(10, 80000000), 7990000.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tpr7e"]
