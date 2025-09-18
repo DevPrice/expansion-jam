@@ -63,11 +63,11 @@ class PointTracker:
 
 	signal stats_changed(avg_points: float)
 
-	var buffer_size: int = 2
-	var _buffer: Array[float]
+	var buffer_size: int = 10
+	var _buffer: Array[Vector2]
 
 	func add_sample(points: float) -> void:
-		_buffer.push_back(points)
+		_buffer.push_back(Vector2(Time.get_ticks_msec(), points))
 		if _buffer.size() > buffer_size:
 			_buffer.pop_front()
 		var avg_points := get_points_per_second()
@@ -76,5 +76,7 @@ class PointTracker:
 	func get_points_per_second() -> float:
 		var size := _buffer.size()
 		if size == 0: return 0.0
-		if size == 1: return _buffer[0]
-		return (_buffer[size - 1] - _buffer[0]) / (size - 1)
+		if size == 1: return _buffer[0].y
+		var difference := _buffer[size - 1] - _buffer[0]
+		var seconds := difference.x / 1000.0
+		return difference.y / seconds

@@ -121,6 +121,7 @@ layout_mode = 1
 offset_left = 0.0
 
 [node name="StatTrackTimer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="StatTrackTimer" to="." method="_update_stats"]
