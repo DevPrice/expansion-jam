@@ -3,20 +3,36 @@ class_name Tile extends Node2D
 signal damaged(damage: float)
 signal destroyed
 
+const MAX_DAMAGED_TILES: int = 200
+static var _damaged_tile_count: int = 0
+var enable_instance_shader_params: bool = false
+
+var _is_damaged: bool = false
+
 @export var hp: float = 1:
 	set(value):
 		hp = maxf(0, value)
 		_max_hp = maxf(_max_hp, value)
-		propagate_call("set_instance_shader_parameter", ["damage", 1.0 - hp / _max_hp])
+		if not _is_damaged and _damaged_tile_count < MAX_DAMAGED_TILES:
+			_is_damaged = true
+			_damaged_tile_count += 1
+			_texture_rect.material = _damagable_material
+			propagate_call("set_instance_shader_parameter", ["instance_id", randi() % 10000])
+		if _is_damaged:
+			propagate_call("set_instance_shader_parameter", ["damage", 1.0 - hp / _max_hp])
 
 @export var point_value: float = 1
 
 @export var _animation_player: AnimationPlayer
 
+@export var _texture_rect: Control
+@export var _damagable_material: Material
+
 var _max_hp: float = hp
 
-func _ready() -> void:
-	propagate_call("set_instance_shader_parameter", ["instance_id", randi() % 10000])
+func _exit_tree() -> void:
+	if _is_damaged:
+		_damaged_tile_count -= 1
 
 func apply_damage(damage: float) -> void:
 	var start_hp := hp

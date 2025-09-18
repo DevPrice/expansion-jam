@@ -91,7 +91,7 @@ func _destroy_effect(tile: Tile, location: Vector2 = tile.global_position) -> vo
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
 	particles.global_position = location
-	add_child(particles)
+	add_child.call_deferred(particles)
 	particles.emitting = true
 	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 

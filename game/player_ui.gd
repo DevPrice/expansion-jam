@@ -25,7 +25,6 @@ func _notification(what: int) -> void:
 
 func _process(_delta: float) -> void:
 	if _allow_points_shrink:
-		print('allowin')
 		points_container.size.x = 0.0
 		points_container.custom_minimum_size.x = 0.0
 	else:

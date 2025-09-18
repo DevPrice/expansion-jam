@@ -1,46 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dk4r11aytipf"]
+[gd_scene load_steps=8 format=3 uid="uid://dk4r11aytipf"]
 
-[ext_resource type="Shader" uid="uid://x7drrf7iqx0e" path="res://content/shaders/shape.gdshader" id="1_7cios"]
 [ext_resource type="Script" uid="uid://bfmsmxbad4ttw" path="res://game/tile.gd" id="1_ifppd"]
 [ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ifppd"]
-noise_type = 3
-frequency = 0.003
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qljeg"]
-noise = SubResource("FastNoiseLite_ifppd")
-seamless = true
-
-[sub_resource type="Gradient" id="Gradient_ifppd"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_qljeg"]
-noise_type = 2
-frequency = 0.031
-fractal_octaves = 1
-cellular_distance_function = 1
-cellular_return_type = 6
-domain_warp_amplitude = 20.0
-domain_warp_frequency = 0.02
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3ok0"]
-noise = SubResource("FastNoiseLite_qljeg")
-color_ramp = SubResource("Gradient_ifppd")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qljeg"]
-shader = ExtResource("1_7cios")
-shader_parameter/voronoi = SubResource("NoiseTexture2D_j3ok0")
-shader_parameter/perlin = SubResource("NoiseTexture2D_qljeg")
-shader_parameter/tint = Color(0.9984512, 0.9628398, 0.93051696, 1)
-shader_parameter/damage_tint = Color(0.85882354, 0.3882353, 0.3372549, 1)
-shader_parameter/edge = 0.5
-shader_parameter/smoothing = 0.05
-shader_parameter/translation_speed = Vector2(0.1, 0.2)
-shader_parameter/shape_spacing = 0.29
-shader_parameter/shape_size = 0.58
-shader_parameter/shadow_size = Vector2(0, 0.08)
+[ext_resource type="Material" uid="uid://dd3qb2caj6rbb" path="res://content/materials/damagable_tile.tres" id="2_qljeg"]
+[ext_resource type="Material" uid="uid://bofk26udl7h3r" path="res://content/materials/perf_tile.tres" id="3_qljeg"]
 
 [sub_resource type="Animation" id="Animation_qljeg"]
 length = 0.001
@@ -103,14 +66,14 @@ _data = {
 &"damage": SubResource("Animation_ifppd")
 }
 
-[node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player")]
+[node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player", "_texture_rect")]
 script = ExtResource("1_ifppd")
 _animation_player = NodePath("AnimationPlayer")
+_texture_rect = NodePath("TextureRect")
+_damagable_material = ExtResource("2_qljeg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_qljeg")
-instance_shader_parameters/damage = 0.0
-instance_shader_parameters/instance_id = 0
+material = ExtResource("3_qljeg")
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 8.0
