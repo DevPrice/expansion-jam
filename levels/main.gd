@@ -13,6 +13,9 @@ func _exit_tree() -> void:
 	Players.player_joined.disconnect(_player_joined)
 	get_viewport().size_changed.disconnect(_window_size_changed)
 
+func _physics_process(_delta: float) -> void:
+	_particles_this_frame = 0
+
 func _player_joined(controller: ExpansionPlayerController) -> void:
 	var player := controller.get_local_player()
 	if player_ui_scene and player:
@@ -69,7 +72,12 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 						_damage_effect(tile)
 		get_viewport().set_input_as_handled()
 
+# TODO: Do something smarter to optimize this
+var _particles_this_frame: int = 0
+const _max_particles_per_frame: int = 10
 func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+	if _particles_this_frame > _max_particles_per_frame: return
+	_particles_this_frame += 1
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
 	particles.global_position = location
 	add_child(particles)
@@ -77,6 +85,8 @@ func _damage_effect(tile: Tile, location: Vector2 = tile.global_position) -> voi
 	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 
 func _destroy_effect(tile: Tile, location: Vector2 = tile.global_position) -> void:
+	if _particles_this_frame > _max_particles_per_frame: return
+	_particles_this_frame += 1
 	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
 	particles.global_position = location
 	add_child(particles)
