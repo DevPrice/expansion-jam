@@ -28,7 +28,7 @@ corner_radius_bottom_right = 100000
 corner_radius_bottom_left = 100000
 corner_detail = 5
 
-[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control")]
+[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +38,7 @@ grow_vertical = 2
 focus_behavior_recursive = 1
 mouse_filter = 1
 script = ExtResource("1_3qdfi")
+points_container = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer")
 points_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer/PointsLabel")
 autoclickers_container = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2")
 autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2/AutoclickersLabel")

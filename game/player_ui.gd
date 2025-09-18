@@ -1,5 +1,6 @@
 extends Control
 
+@export var points_container: Control
 @export var points_text: RichTextLabel
 @export var autoclickers_container: Control
 @export var autoclickers_text: RichTextLabel
@@ -19,6 +20,9 @@ var _point_tracker := PointTracker.new()
 func _notification(what: int) -> void:
 	match what:
 		Controller.NOTIFICATION_POSSESSED: _possessed(Controller.get_instigator(self))
+
+func _process(_delta: float) -> void:
+	points_container.custom_minimum_size = points_container.size
 
 func _possessed(controller: ExpansionPlayerController) -> void:
 	_updated_points_deferred(controller.player_state.points)
