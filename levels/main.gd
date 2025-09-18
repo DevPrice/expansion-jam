@@ -77,6 +77,9 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 						_damage_effect(_viewport_to_global_pos(event.position))
 					else:
 						_damage_effect(tile.global_position)
+		var controller: ExpansionPlayerController = Players.get_primary_controller()
+		if controller.player_state.leadership or true:
+			_autoclick(controller.player_state.autoclickers)
 		get_viewport().set_input_as_handled()
 
 # TODO: Do something smarter to optimize this

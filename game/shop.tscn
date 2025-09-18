@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ca5e8cpj38a2v"]
+[gd_scene load_steps=32 format=3 uid="uid://ca5e8cpj38a2v"]
 
 [ext_resource type="Script" uid="uid://1c18ndvfuu35" path="res://game/shop.gd" id="1_p41nr"]
 [ext_resource type="Shader" uid="uid://bdhgvfsb7hf6k" path="res://content/shaders/background_blur.gdshader" id="1_tqf2i"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://ctgn8vmy2fj1q" path="res://game/merch_destroy_bonus.gd" id="7_ew5oi"]
 [ext_resource type="Script" uid="uid://dpsajbcrm7jjt" path="res://game/merch_autoclicker_harvesting.gd" id="10_wjx1w"]
 [ext_resource type="Script" uid="uid://s117hjg8sbrx" path="res://game/merch_autoclicker_power_harvesting.gd" id="11_tcepo"]
+[ext_resource type="Script" uid="uid://bytn5diuljq7a" path="res://game/merch_leadership.gd" id="13_ofsnm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjx1w"]
 shader = ExtResource("1_tqf2i")
@@ -106,6 +107,12 @@ point_count = 2
 _limits = [0.0, 10000.0, 0.0, 4.0]
 _data = [Vector2(0, 800), 0.0, 0.0, 0, 0, Vector2(1, 2400), 0.0, 0.0, 0, 0, Vector2(2, 7500), 0.0, 0.0, 0, 0, Vector2(3, 15500), 0.0, 0.0, 0, 0, Vector2(4, 33333), 0.0, 0.0, 0, 0]
 point_count = 5
+
+[sub_resource type="Resource" id="Resource_jmxk6"]
+script = ExtResource("4_itk1t")
+level = 4
+unlock = NodePath("../Leadership")
+metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [node name="Shop" type="PanelContainer" node_paths=PackedStringArray("_merch_container")]
 material = SubResource("ShaderMaterial_wjx1w")
@@ -207,4 +214,13 @@ title = "Reach"
 description = "Increase the area of tiles affected by your clicks"
 cost = 0.0
 cost_curve = SubResource("Curve_tpr7e")
+unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_jmxk6")])
+
+[node name="Leadership" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
+visible = false
+layout_mode = 2
+script = ExtResource("13_ofsnm")
+title = "Swarm leadership"
+description = "Your auto-clickers click an additional time each time you click"
+cost = 250000.0
 unlocks = Array[ExtResource("4_itk1t")]([])

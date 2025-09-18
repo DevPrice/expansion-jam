@@ -10,6 +10,7 @@ signal show_stats
 @export var damage_amp: float = 1.0
 @export var tile_bonus: float = 0.0
 @export var reach: int = 0
+@export var leadership: bool = false
 
 @export var autoclickers: int = 0:
 	set(value):
