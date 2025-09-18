@@ -20,5 +20,3 @@ script = ExtResource("3_6astx")
 [node name="AutoclickTimer" type="Timer" parent="State" index="0"]
 process_callback = 0
 autostart = true
-
-[connection signal="timeout" from="State/AutoclickTimer" to="State" method="_autoclick_timer"]

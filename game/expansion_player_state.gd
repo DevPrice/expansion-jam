@@ -31,6 +31,17 @@ signal show_stats
 		total_points_earned = value
 		total_points_earned_changed.emit(points)
 
+func _physics_process(_delta: float) -> void:
+	if autoclickers <= 0: return
+	var ticks_per_frame := Engine.physics_ticks_per_second
+	var frame := Engine.get_physics_frames() % ticks_per_frame
+	var base_autoclicks := autoclickers / ticks_per_frame
+	var remainder := autoclickers % ticks_per_frame
+	if frame < remainder:
+		autoclick.emit(base_autoclicks + 1)
+	else:
+		autoclick.emit(base_autoclicks)
+
 func get_click_damage() -> float:
 	return (1.0 + bonus_damage) * damage_amp
 
@@ -39,6 +50,3 @@ func get_autoclick_damage() -> float:
 
 func enable_stat_tracking() -> void:
 	show_stats.emit()
-
-func _autoclick_timer() -> void:
-	autoclick.emit(autoclickers)
