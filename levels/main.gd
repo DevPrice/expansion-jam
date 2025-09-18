@@ -53,6 +53,7 @@ func _autoclick(count: int) -> void:
 	if count < 1: return
 	var state := _get_player_state()
 	var sample := Arrays.sample(tilemap.get_children(), count)
+	sample.shuffle()
 	for tile: Tile in sample:
 		tile.apply_damage(state.get_autoclick_damage())
 		_damage_effect(tile)
