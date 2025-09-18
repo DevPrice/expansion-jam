@@ -31,6 +31,8 @@ signal show_stats
 		total_points_earned = value
 		total_points_earned_changed.emit(total_points_earned)
 
+@export var autoclicker_harvest: int = 0
+
 func _physics_process(_delta: float) -> void:
 	if autoclickers <= 0: return
 	var ticks_per_frame := Engine.physics_ticks_per_second
