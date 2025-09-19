@@ -11,6 +11,13 @@ var window_mode: Window.Mode:
 		get_window().mode = value
 		DeviceSettings.store_setting("display/window/size/mode", value)
 
+@export
+var particle_density: ParticleDensity:
+	get: return GameSettings.max_particles_per_tick as ParticleDensity
+	set(value):
+		GameSettings.max_particles_per_tick = value
+		DeviceSettings.store_setting(GameSettings.MAX_PARTICLES_PER_TICK_SETTING_PATH, value)
+
 @export_range(0.0, 1.0, 0.025)
 var master_volume: float:
 	get:
@@ -19,7 +26,7 @@ var master_volume: float:
 	set(value):
 		var bus := AudioServer.get_bus_index("Master")
 		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting("audio/volume/Master", value)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Master"), value)
 
 @export_range(0.0, 1.0, 0.025)
 var music_volume: float:
@@ -29,7 +36,7 @@ var music_volume: float:
 	set(value):
 		var bus := AudioServer.get_bus_index("Music")
 		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting("audio/volume/Music", value)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Music"), value)
 
 @export_range(0.0, 1.0, 0.025)
 var effects_volume: float:
@@ -39,7 +46,7 @@ var effects_volume: float:
 	set(value):
 		var bus := AudioServer.get_bus_index("Effects")
 		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting("audio/volume/Effects", value)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Effects"), value)
 
 @export
 var vsync: bool:
@@ -116,11 +123,9 @@ func _create_container(property_info: Dictionary) -> Control:
 	container.visible = property_info.usage & PROPERTY_USAGE_EDITOR
 	return container
 
-enum AntialiasingMode {
-	DISABLED = Window.MSAA_DISABLED,
-	MSAA_2X = Window.MSAA_2X,
-	MSAA_4X = Window.MSAA_4X,
-	MSAA_8X = Window.MSAA_8X,
-	FXAA = Window.MSAA_MAX,
-	TAA,
+enum ParticleDensity {
+	DISABLED = 0,
+	LOW = 1,
+	MEDIUM = 3,
+	HIGH = 5,
 }

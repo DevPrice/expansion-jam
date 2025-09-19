@@ -86,11 +86,9 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 			_autoclick(controller.player_state.autoclickers)
 		get_viewport().set_input_as_handled()
 
-# TODO: Do something smarter to optimize this
 var _particles_this_frame: int = 0
-const _max_particles_per_frame: int = 5
 func _damage_effect(location: Vector2) -> void:
-	if _particles_this_frame >= _max_particles_per_frame: return
+	if _particles_this_frame >= GameSettings.max_particles_per_tick: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
 	particles.global_position = location
@@ -99,7 +97,7 @@ func _damage_effect(location: Vector2) -> void:
 	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 
 func _destroy_effect(location: Vector2) -> void:
-	if _particles_this_frame > _max_particles_per_frame: return
+	if _particles_this_frame >= GameSettings.max_particles_per_tick: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
 	particles.global_position = location

@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameSettings="*res://game/game_settings.gd"
 WindowManager="*res://addons/utils/window_manager.gd"
 Players="*res://addons/player_controller/scenes/players.tscn"
 Net="*res://addons/net/net.gd"
