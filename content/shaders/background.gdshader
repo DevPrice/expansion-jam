@@ -21,7 +21,7 @@ vec3 diagonal_gradient(vec2 uv) {
 
 float circle_mask(vec2 uv, vec2 pixel_size) {
 	vec2 grid_pos = ((uv + TIME * circle_speed * .01f) / pixel_size) / grid_size;
-	grid_pos.x += .5f * float(ivec2(grid_pos).y % 2);
+	grid_pos.x += .5f * float(int(grid_pos.y + step(0.f, sign(grid_pos.y))) % 2);
 	vec2 grid_uv = fract(grid_pos) - 0.5f;
 	float dist = length(grid_uv) / SQRT2;
 	float uv_dist = length(uv) / SQRT2;
@@ -34,7 +34,7 @@ void fragment() {
 	vec2 pixel_size = SCREEN_PIXEL_SIZE;
 	vec3 bg = diagonal_gradient(uv);
 	float circle_mask = circle_mask(uv, pixel_size);
-	
+
 	ivec2 pixel = ivec2(FRAGCOORD.xy);
 	float checker = float((pixel.x / 2 + pixel.y / 2) % 2);
 
