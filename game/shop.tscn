@@ -213,4 +213,4 @@ layout_mode = 2
 script = ExtResource("13_ofsnm")
 title = "Swarm leadership"
 description = "Your auto-clickers click an additional time each time you click"
-cost = 250000.0
+cost = 1000000.0
