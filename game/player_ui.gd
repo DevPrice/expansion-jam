@@ -6,6 +6,7 @@ extends Control
 @export var autoclickers_text: RichTextLabel
 @export var stat_tracker_text: RichTextLabel
 @export var stat_tracker_control: Control
+@export var options_container: Control
 
 var _displayed_score: float:
 	set(value):
@@ -70,6 +71,9 @@ func _log10(x: float) -> float:
 func _update_stats() -> void:
 	var controller: ExpansionPlayerController = Controller.get_instigator(self)
 	_point_tracker.add_sample(controller.player_state.total_points_earned)
+
+func _options_button_toggled(toggled_on: bool) -> void:
+	options_container.visible = toggled_on
 
 class PointTracker:
 

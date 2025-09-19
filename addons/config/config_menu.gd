@@ -157,13 +157,18 @@ func _create_config(property_info: Dictionary) -> Control:
 	var label := _create_label(property_info)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	var container := GridContainer.new()
-	container.columns = 2
-	container.add_child(label)
+	var container := _create_container(property_info)
+	var heading := _create_header(property_info)
+	container.add_child(heading)
 	var knob := _create_knob(property_info)
 	if knob:
 		knob.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		container.add_child(knob)
+	return container
+
+func _create_container(property_info: Dictionary) -> Control:
+	var container := GridContainer.new()
+	container.columns = 2
 	container.tooltip_text = _get_tooltip_text(property_info.name)
 	container.visible = property_info.usage & PROPERTY_USAGE_EDITOR
 	return container

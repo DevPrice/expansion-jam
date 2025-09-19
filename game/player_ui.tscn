@@ -1,8 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=15 format=3 uid="uid://cxbtq6b3c4wxs"]
 
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
 [ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
 [ext_resource type="FontFile" uid="uid://b18iuu1gfh1d3" path="res://content/fonts/Quicksand-SemiBold.ttf" id="2_waps8"]
+[ext_resource type="Texture2D" uid="uid://credj63b1f3t3" path="res://content/textures/options.svg" id="3_wgxck"]
+[ext_resource type="Shader" uid="uid://bdhgvfsb7hf6k" path="res://content/shaders/background_blur.gdshader" id="4_vt44r"]
+[ext_resource type="Script" uid="uid://d3mvumkcliuoq" path="res://game/game_options_menu.gd" id="5_7vmyj"]
+
+[sub_resource type="Theme" id="Theme_wgxck"]
+HeaderLarge/font_sizes/font_size = 28
+HeaderMedium/font_sizes/font_size = 24
+HeaderSmall/font_sizes/font_size = 12
+HeaderSmall/fonts/font = ExtResource("2_waps8")
+SettingLabel/base_type = &"VBoxContainer"
+SettingLabel/constants/separation = 4
+VBoxContainer/constants/separation = 12
 
 [sub_resource type="FontVariation" id="FontVariation_wgxck"]
 base_font = ExtResource("2_waps8")
@@ -28,15 +40,25 @@ corner_radius_bottom_right = 100000
 corner_radius_bottom_left = 100000
 corner_detail = 5
 
-[node name="PlayerUi" type="Control" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control")]
-layout_mode = 3
+[sub_resource type="InputEventAction" id="InputEventAction_7vmyj"]
+action = &"options"
+
+[sub_resource type="Shortcut" id="Shortcut_4y2qi"]
+events = [SubResource("InputEventAction_7vmyj")]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7vmyj"]
+shader = ExtResource("4_vt44r")
+shader_parameter/tint = Color(0.101960786, 0.101960786, 0.101960786, 0.6)
+shader_parameter/blur_level = 2.0
+
+[node name="PlayerUi" type="HSplitContainer" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control", "options_container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_behavior_recursive = 1
-mouse_filter = 1
+theme = SubResource("Theme_wgxck")
 script = ExtResource("1_3qdfi")
 points_container = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer")
 points_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer/PointsLabel")
@@ -44,14 +66,11 @@ autoclickers_container = NodePath("MarginContainer/Control/VBoxContainer/PanelCo
 autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContainer2/AutoclickersLabel")
 stat_tracker_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2/PointsPerSecondLabel")
 stat_tracker_control = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2")
+options_container = NodePath("MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
@@ -115,12 +134,71 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Shop" parent="." instance=ExtResource("2_nw27i")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-offset_left = 0.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="OptionsButton" type="Button" parent="MarginContainer/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Options"
+toggle_mode = true
+shortcut = SubResource("Shortcut_4y2qi")
+icon = ExtResource("3_wgxck")
+expand_icon = true
+
+[node name="OptionsContainer" type="PanelContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_7vmyj")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"HeaderLarge"
+text = "Options"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="ConfigMenu" type="VBoxContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("5_7vmyj")
+
+[node name="Shop" parent="." instance=ExtResource("2_nw27i")]
+layout_mode = 2
 
 [node name="StatTrackTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
+[connection signal="toggled" from="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsButton" to="." method="_options_button_toggled"]
 [connection signal="timeout" from="StatTrackTimer" to="." method="_update_stats"]

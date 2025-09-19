@@ -8,6 +8,7 @@ MarginContainer/constants/margin_bottom = 16
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
+VBoxContainer/constants/separation = 4
 
 [sub_resource type="Theme" id="Theme_uhhv5"]
 default_font = ExtResource("2_612un")
