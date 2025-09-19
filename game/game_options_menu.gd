@@ -83,7 +83,7 @@ func _exit_tree() -> void:
 func close_game() -> void:
 	DisplayServer.dialog_show(
 		"Quit game?",
-		"Are you sure you want to quit? Your progress with not be saved.",
+		"Are you sure you want to quit? Your progress will not be saved.",
 		PackedStringArray(["Quit", "Cancel"]),
 		_option_selected,
 	)

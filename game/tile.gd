@@ -45,3 +45,13 @@ func apply_damage(damage: float) -> void:
 		if is_zero_approx(hp):
 			hp = 0.0
 			destroyed.emit()
+
+func _mouse_entered() -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(self, "scale", 1.1 * Vector2.ONE, .05)
+	tween.set_trans(Tween.TRANS_SPRING)
+
+func _mouse_exited() -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(self, "scale", 1.0 * Vector2.ONE, .1)
+	tween.set_trans(Tween.TRANS_SPRING)

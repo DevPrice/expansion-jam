@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dk4r11aytipf"]
+[gd_scene load_steps=9 format=3 uid="uid://dk4r11aytipf"]
 
 [ext_resource type="Script" uid="uid://bfmsmxbad4ttw" path="res://game/tile.gd" id="1_ifppd"]
 [ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
@@ -66,6 +66,9 @@ _data = {
 &"damage": SubResource("Animation_ifppd")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qljeg"]
+size = Vector2(16, 16)
+
 [node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player", "_texture_rect")]
 script = ExtResource("1_ifppd")
 _animation_player = NodePath("AnimationPlayer")
@@ -86,3 +89,11 @@ expand_mode = 1
 libraries = {
 &"": SubResource("AnimationLibrary_j3ok0")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qljeg")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_mouse_exited"]
