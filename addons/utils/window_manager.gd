@@ -29,5 +29,8 @@ func _shortcut_input(event: InputEvent) -> void:
 func toggle_fullscreen() -> void:
 	var window = get_window()
 	if window:
-		window.mode = Window.MODE_WINDOWED if window.mode != Window.MODE_WINDOWED else Window.MODE_EXCLUSIVE_FULLSCREEN
+		match window.mode:
+			Window.MODE_EXCLUSIVE_FULLSCREEN, Window.MODE_FULLSCREEN:
+				window.mode = Window.MODE_WINDOWED
+			_: window.mode = Window.MODE_FULLSCREEN
 		DeviceSettings.store_settings({"display/window/size/mode": window.mode})
