@@ -63,7 +63,7 @@ metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_p41nr"]
 _limits = [0.0, 3530.0, 0.0, 99.0]
-_data = [Vector2(0, 50), 0.0, 35.151516, 0, 1, Vector2(99, 3530), 35.151516, 35.3, 1, 1]
+_data = [Vector2(0, 50), 0.0, 18.68687, 0, 1, Vector2(99, 1900), 18.68687, 35.3, 1, 1]
 point_count = 2
 metadata/_snap_count = 14
 
@@ -144,7 +144,6 @@ layout_mode = 2
 script = ExtResource("4_5oa2q")
 title = "Click power"
 description = "Increase the strength of your clicks"
-cost = 0.0
 cost_curve = SubResource("Curve_jbcvl")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ew5oi"), SubResource("Resource_tqf2i"), SubResource("Resource_itk1t")])
 
@@ -155,7 +154,6 @@ script = ExtResource("5_13mum")
 title = "Stat tracker"
 description = "Track your average $ per second"
 cost = 999.0
-unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="Autoclicker" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
 visible = false
@@ -163,7 +161,6 @@ layout_mode = 2
 script = ExtResource("3_jbcvl")
 title = "Auto-clicker"
 description = "Automatically clicks one tile every second"
-cost = 0.0
 cost_curve = SubResource("Curve_p41nr")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_13mum")])
 
@@ -173,9 +170,7 @@ layout_mode = 2
 script = ExtResource("5_a73qu")
 title = "Auto-clicker power"
 description = "Increase the strength of your autoclickers"
-cost = 0.0
 cost_curve = SubResource("Curve_a73qu")
-unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="DestroyBonus" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
 visible = false
@@ -183,7 +178,6 @@ layout_mode = 2
 script = ExtResource("7_ew5oi")
 title = "Tile bonus"
 description = "Gain additional $ when a tile is destroyed"
-cost = 0.0
 cost_curve = SubResource("Curve_ew5oi")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_tcepo")])
 
@@ -193,7 +187,6 @@ layout_mode = 2
 script = ExtResource("10_wjx1w")
 title = "Auto-clicker harvesting"
 description = "Gain an additional auto-clicker when a tile is destroyed"
-cost = 0.0
 cost_curve = SubResource("Curve_tqf2i")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_ofsnm")])
 
@@ -204,7 +197,6 @@ script = ExtResource("11_tcepo")
 title = "Power harvesting"
 description = "Gain auto-clicker power when a tile is destroyed"
 cost_curve = SubResource("Curve_tcepo")
-unlocks = Array[ExtResource("4_itk1t")]([])
 
 [node name="ClickReach" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_ungis")]
 visible = false
@@ -212,7 +204,6 @@ layout_mode = 2
 script = ExtResource("6_tpr7e")
 title = "Reach"
 description = "Increase the area of tiles affected by your clicks"
-cost = 0.0
 cost_curve = SubResource("Curve_tpr7e")
 unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_jmxk6")])
 
@@ -223,4 +214,3 @@ script = ExtResource("13_ofsnm")
 title = "Swarm leadership"
 description = "Your auto-clickers click an additional time each time you click"
 cost = 250000.0
-unlocks = Array[ExtResource("4_itk1t")]([])

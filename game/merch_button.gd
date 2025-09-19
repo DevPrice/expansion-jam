@@ -63,3 +63,11 @@ func _unlock() -> void:
 		if unlock and unlock.level == level:
 			var node := get_node_or_null(unlock.unlock)
 			if node: node.visible = true
+
+func _make_custom_tooltip(for_text: String) -> Object:
+	var tooltip := RichTextLabel.new()
+	tooltip.autowrap_mode = TextServer.AUTOWRAP_OFF
+	tooltip.bbcode_enabled = true
+	tooltip.fit_content = true
+	tooltip.text = for_text
+	return tooltip
