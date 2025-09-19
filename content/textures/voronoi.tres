@@ -1,0 +1,18 @@
+[gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://cssgcjjblfa54"]
+
+[sub_resource type="Gradient" id="Gradient_bqloy"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_evj88"]
+noise_type = 2
+frequency = 0.031
+fractal_octaves = 1
+cellular_distance_function = 1
+cellular_return_type = 6
+domain_warp_amplitude = 20.0
+domain_warp_frequency = 0.02
+
+[resource]
+noise = SubResource("FastNoiseLite_evj88")
+color_ramp = SubResource("Gradient_bqloy")
+seamless = true

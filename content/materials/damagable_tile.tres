@@ -1,36 +1,13 @@
-[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://dd3qb2caj6rbb"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dd3qb2caj6rbb"]
 
 [ext_resource type="Shader" uid="uid://x7drrf7iqx0e" path="res://content/shaders/shape.gdshader" id="1_bqloy"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ifppd"]
-noise_type = 3
-frequency = 0.003
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qljeg"]
-noise = SubResource("FastNoiseLite_ifppd")
-seamless = true
-
-[sub_resource type="Gradient" id="Gradient_ifppd"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_qljeg"]
-noise_type = 2
-frequency = 0.031
-fractal_octaves = 1
-cellular_distance_function = 1
-cellular_return_type = 6
-domain_warp_amplitude = 20.0
-domain_warp_frequency = 0.02
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3ok0"]
-noise = SubResource("FastNoiseLite_qljeg")
-color_ramp = SubResource("Gradient_ifppd")
-seamless = true
+[ext_resource type="Texture2D" uid="uid://dhv6fjimvao8t" path="res://content/textures/perlin.tres" id="2_4c4jk"]
+[ext_resource type="Texture2D" uid="uid://cssgcjjblfa54" path="res://content/textures/voronoi.tres" id="3_ujg0d"]
 
 [resource]
 shader = ExtResource("1_bqloy")
-shader_parameter/voronoi = SubResource("NoiseTexture2D_j3ok0")
-shader_parameter/perlin = SubResource("NoiseTexture2D_qljeg")
+shader_parameter/voronoi = ExtResource("3_ujg0d")
+shader_parameter/perlin = ExtResource("2_4c4jk")
 shader_parameter/tint = Color(0.9984512, 0.9628398, 0.93051696, 1)
 shader_parameter/damage_tint = Color(0.85882354, 0.3882353, 0.3372549, 1)
 shader_parameter/edge = 0.5

@@ -2,9 +2,6 @@ shader_type canvas_item;
 
 #include "sdf.gdshaderinc"
 
-uniform sampler2D voronoi : hint_default_black, repeat_enable;
-uniform sampler2D perlin : hint_default_black, repeat_enable;
-
 uniform vec3 tint : source_color = vec3(1.f);
 uniform float edge = .5f;
 uniform float smoothing = .05f;

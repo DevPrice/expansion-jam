@@ -13,7 +13,7 @@ var _is_damaged: bool = false
 	set(value):
 		hp = maxf(0, value)
 		_max_hp = maxf(_max_hp, value)
-		if not _is_damaged and _damaged_tile_count < MAX_DAMAGED_TILES:
+		if not is_equal_approx(hp, _max_hp) and not _is_damaged and _damaged_tile_count < MAX_DAMAGED_TILES:
 			_is_damaged = true
 			_damaged_tile_count += 1
 			_texture_rect.material = _damagable_material
@@ -43,4 +43,5 @@ func apply_damage(damage: float) -> void:
 		_animation_player.stop()
 		_animation_player.play("damage")
 		if is_zero_approx(hp):
+			hp = 0.0
 			destroyed.emit()
