@@ -70,14 +70,17 @@ func _autoclick(count: int) -> void:
 	var state := _get_player_state()
 	if count >= tilemap.get_child_count():
 		var ratio := float(count) / tilemap.get_child_count()
+		var sample := Arrays.sample(tilemap.get_children(), GameSettings.max_particles_per_tick - _particles_this_frame)
+		for tile: Tile in sample:
+			_damage_effect(tile.global_position)
 		tilemap.propagate_call("apply_damage", [state.get_autoclick_damage() * ratio])
 	else:
 		var sample := Arrays.sample(tilemap.get_children(), count)
 		sample.shuffle()
 		for tile: Tile in sample:
-			tile.apply_damage(state.get_autoclick_damage())
 			if _particles_this_frame < GameSettings.max_particles_per_tick:
 				_damage_effect(tile.global_position)
+			tile.apply_damage(state.get_autoclick_damage())
 
 # TODO: Ew, a hack in my jam game
 var _click_damage: bool = false
