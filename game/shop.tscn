@@ -62,8 +62,8 @@ unlock = NodePath("../ClickReach")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_p41nr"]
-_limits = [0.0, 3530.0, 0.0, 100.0]
-_data = [Vector2(0, 50), 0.0, 34.8, 0, 1, Vector2(100, 3530), 34.8, 35.3, 1, 1]
+_limits = [0.0, 3530.0, 0.0, 99.0]
+_data = [Vector2(0, 50), 0.0, 35.151516, 0, 1, Vector2(99, 3530), 35.151516, 35.3, 1, 1]
 point_count = 2
 metadata/_snap_count = 14
 
@@ -73,13 +73,13 @@ unlock = NodePath("../AutoclickerPower")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_a73qu"]
-_limits = [0.0, 55000.0, 0.0, 20.0]
-_data = [Vector2(0, 1000), 0.0, 2700.0, 0, 1, Vector2(20, 55000), 2700.0, 0.0, 1, 0]
+_limits = [0.0, 275000.0, 0.0, 100.0]
+_data = [Vector2(0, 1000), 0.0, 2740.0, 0, 1, Vector2(100, 275000), 2740.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_ew5oi"]
 _limits = [0.0, 20000.0, 0.0, 10.0]
-_data = [Vector2(0, 125), 0.0, 0.0, 0, 0, Vector2(10, 8500), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 125), 0.0, 0.0, 0, 0, Vector2(10, 4500), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="Resource_tcepo"]

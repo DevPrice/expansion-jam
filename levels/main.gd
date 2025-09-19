@@ -84,9 +84,9 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 
 # TODO: Do something smarter to optimize this
 var _particles_this_frame: int = 0
-const _max_particles_per_frame: int = 10
+const _max_particles_per_frame: int = 5
 func _damage_effect(location: Vector2) -> void:
-	if _particles_this_frame > _max_particles_per_frame: return
+	if _particles_this_frame >= _max_particles_per_frame: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
 	particles.global_position = location
