@@ -58,11 +58,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func _autoclick(count: int) -> void:
 	if count < 1: return
 	var state := _get_player_state()
-	var sample := Arrays.sample(tilemap.get_children(), count)
-	sample.shuffle()
-	for tile: Tile in sample:
-		tile.apply_damage(state.get_autoclick_damage())
-		_damage_effect(tile.global_position)
+	if count >= tilemap.get_child_count():
+		var ratio := float(count) / tilemap.get_child_count()
+		tilemap.propagate_call("apply_damage", [state.get_autoclick_damage() * ratio])
+	else:
+		var sample := Arrays.sample(tilemap.get_children(), count)
+		sample.shuffle()
+		for tile: Tile in sample:
+			tile.apply_damage(state.get_autoclick_damage())
+			_damage_effect(tile.global_position)
 
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
