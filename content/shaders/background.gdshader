@@ -20,11 +20,13 @@ vec3 diagonal_gradient(vec2 uv) {
 }
 
 float circle_mask(vec2 uv, vec2 pixel_size) {
-	float radius = mix(circle_base, circle_growth, length(uv) / SQRT2);
-	vec2 grid_pos = (uv / pixel_size) / grid_size;
-	vec2 grid_uv = fract(grid_pos + TIME * circle_speed) - 0.5f;
+	vec2 grid_pos = ((uv + TIME * circle_speed * .01f) / pixel_size) / grid_size;
+	grid_pos.x += .5f * float(ivec2(grid_pos).y % 2);
+	vec2 grid_uv = fract(grid_pos) - 0.5f;
 	float dist = length(grid_uv) / SQRT2;
-	return smoothstep(radius, radius - (0.25f - .15f * length(uv)), dist);
+	float uv_dist = length(uv) / SQRT2;
+	float radius = mix(circle_base, circle_growth, uv_dist);
+	return smoothstep(radius, radius - (0.25f - .2f * uv_dist), dist);
 }
 
 void fragment() {
