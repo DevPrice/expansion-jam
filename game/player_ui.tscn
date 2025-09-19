@@ -158,6 +158,7 @@ icon = ExtResource("3_wgxck")
 expand_icon = true
 
 [node name="OptionsContainer" type="PanelContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer"]
+visible = false
 material = SubResource("ShaderMaterial_7vmyj")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
