@@ -59,6 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_behavior_recursive = 1
 theme = SubResource("Theme_wgxck")
+dragging_enabled = false
 script = ExtResource("1_3qdfi")
 points_container = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer")
 points_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer/PointsLabel")
