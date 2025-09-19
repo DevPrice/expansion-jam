@@ -28,7 +28,7 @@ var master_volume: float:
 		AudioServer.set_bus_volume_linear(bus, value)
 		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Master"), value)
 
-@export_range(0.0, 1.0, 0.025)
+@export_range(0.0, 1.0, 0.01)
 var music_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Music")
@@ -38,7 +38,7 @@ var music_volume: float:
 		AudioServer.set_bus_volume_linear(bus, value)
 		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Music"), value)
 
-@export_range(0.0, 1.0, 0.025)
+@export_range(0.0, 1.0, 0.01)
 var effects_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Effects")
