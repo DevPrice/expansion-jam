@@ -7,6 +7,8 @@ extends Node2D
 @export var damage_particles_scene: PackedScene
 @export var destroy_particles_scene: PackedScene
 
+var _particles_this_frame: int = 0
+
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
 	get_viewport().size_changed.connect(_window_size_changed)
@@ -53,7 +55,8 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.points += controller.player_state.tile_bonus
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
-	_destroy_effect(tile.global_position)
+	if _particles_this_frame < GameSettings.max_particles_per_tick or _click_damage:
+		_destroy_effect(tile.global_position)
 
 func _hide_title() -> void:
 	animation_player.play("hide_title")
@@ -73,8 +76,11 @@ func _autoclick(count: int) -> void:
 		sample.shuffle()
 		for tile: Tile in sample:
 			tile.apply_damage(state.get_autoclick_damage())
-			_damage_effect(tile.global_position)
+			if _particles_this_frame < GameSettings.max_particles_per_tick:
+				_damage_effect(tile.global_position)
 
+# TODO: Ew, a hack in my jam game
+var _click_damage: bool = false
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
 		var state := _get_player_state()
@@ -83,19 +89,19 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 			for dy: int in range(-state.reach, state.reach + 1):
 				var tile := tilemap.get_cell_tile(cell_pos + Vector2i(dx, dy))
 				if tile:
-					tile.apply_damage(state.get_click_damage())
 					if dx == 0 and dy == 0:
 						_damage_effect(_viewport_to_global_pos(event.position))
-					else:
+						_click_damage = true
+					elif _particles_this_frame < GameSettings.max_particles_per_tick:
 						_damage_effect(tile.global_position)
+					tile.apply_damage(state.get_click_damage())
+					_click_damage = false
 		var controller: ExpansionPlayerController = Players.get_primary_controller()
 		if controller.player_state.leadership:
 			_autoclick(controller.player_state.autoclickers)
 		get_viewport().set_input_as_handled()
 
-var _particles_this_frame: int = 0
 func _damage_effect(location: Vector2) -> void:
-	if _particles_this_frame >= GameSettings.max_particles_per_tick: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = damage_particles_scene.instantiate()
 	particles.global_position = location
@@ -104,7 +110,6 @@ func _damage_effect(location: Vector2) -> void:
 	particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 
 func _destroy_effect(location: Vector2) -> void:
-	if _particles_this_frame >= GameSettings.max_particles_per_tick: return
 	_particles_this_frame += 1
 	var particles: GPUParticles2D = destroy_particles_scene.instantiate()
 	particles.global_position = location

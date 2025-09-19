@@ -101,6 +101,8 @@ func _validate_property(property: Dictionary) -> void:
 			property.hint_string = "Windowed:0,Fullscreen:3"
 		&"window_mode":
 			property.hint_string = "Windowed:0,Fullscreen:3,Exclusive fullscreen:4"
+		&"particle_density":
+			property.hint_string = "Very low:0,Low:1,Medium:3,High:5"
 
 func _config_changed(config: StringName, value: Variant) -> void:
 	match config:
@@ -124,7 +126,7 @@ func _create_container(property_info: Dictionary) -> Control:
 	return container
 
 enum ParticleDensity {
-	DISABLED = 0,
+	VERY_LOW = 0,
 	LOW = 1,
 	MEDIUM = 3,
 	HIGH = 5,
