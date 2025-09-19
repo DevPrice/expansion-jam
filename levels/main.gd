@@ -145,10 +145,13 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	var camera := controller.camera
-	var tile_bounds := tilemap.bounds.grow(2)
+	var tile_bounds := tilemap.bounds.grow(2).expand(Vector2i(-3, -3))
 	var tile_size := tilemap.tile_set.tile_size
-	var viewport_size := Vector2(camera.get_viewport().size)
-	var shop_width: float = controller.get_hud().get_node("Shop").size.x
+	var viewport := camera.get_window()
+	var viewport_size := Vector2(viewport.size)
+	var ui_scale := viewport.content_scale_factor
+	var shop_control: Control = controller.get_hud().get_node("Shop")
+	var shop_width: float = shop_control.size.x
 	viewport_size.x -= shop_width
 
 	var world_bounds := Rect2(
@@ -167,7 +170,7 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 
 	var world_span := Vector2(dx, dy) * 2.0
 	var zoom_scale := viewport_size / world_span
-	var zoom := minf(zoom_scale.x, zoom_scale.y)
+	var zoom := minf(zoom_scale.x, zoom_scale.y) / ui_scale
 
 	if tween_zoom:
 		var tween := get_tree().create_tween()

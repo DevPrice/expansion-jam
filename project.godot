@@ -22,7 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameSettings="*res://game/game_settings.gd"
-WindowManager="*res://addons/utils/window_manager.gd"
+WindowManager="*res://game/window_manager.tscn"
 Players="*res://addons/player_controller/scenes/players.tscn"
 Net="*res://addons/net/net.gd"
 Console="*res://addons/dev_console/dev_console.gd"

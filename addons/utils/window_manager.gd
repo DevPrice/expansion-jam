@@ -15,11 +15,17 @@ func _exit_tree() -> void:
 	var window := get_window()
 	if window: window.size_changed.disconnect(_size_changed)
 
+func _ready() -> void:
+	_size_changed()
+
 func _size_changed() -> void:
 	var window := get_window()
 	if window and content_scale_curve:
-		var shortest_side := minf(window.size.x, window.size.y)
-		window.content_scale_factor = content_scale_curve.sample(shortest_side)
+		window.content_scale_factor = get_ui_scale(window.size)
+
+func get_ui_scale(viewport_size: Vector2i) -> float:
+	var shortest_side := minf(viewport_size.x, viewport_size.y)
+	return content_scale_curve.sample(shortest_side)
 
 func _shortcut_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_fullscreen"):
