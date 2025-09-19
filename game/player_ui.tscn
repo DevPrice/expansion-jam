@@ -158,7 +158,6 @@ icon = ExtResource("3_wgxck")
 expand_icon = true
 
 [node name="OptionsContainer" type="PanelContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer"]
-visible = false
 material = SubResource("ShaderMaterial_7vmyj")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
@@ -172,7 +171,7 @@ size_flags_vertical = 0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer/MarginContainer"]
 layout_mode = 2
