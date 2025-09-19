@@ -65,6 +65,7 @@ func _unlock() -> void:
 			if node: node.visible = true
 
 func _make_custom_tooltip(for_text: String) -> Object:
+	if not for_text: return null
 	var tooltip := RichTextLabel.new()
 	tooltip.autowrap_mode = TextServer.AUTOWRAP_OFF
 	tooltip.bbcode_enabled = true

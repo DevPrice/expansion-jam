@@ -78,13 +78,13 @@ _data = [Vector2(0, 1000), 0.0, 2740.0, 0, 1, Vector2(100, 275000), 2740.0, 0.0,
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_ew5oi"]
-_limits = [0.0, 20000.0, 0.0, 10.0]
-_data = [Vector2(0, 125), 0.0, 0.0, 0, 0, Vector2(10, 4500), 0.0, 0.0, 0, 0]
+_limits = [0.0, 20000.0, 0.0, 9.0]
+_data = [Vector2(0, 125), 0.0, 441.6667, 0, 1, Vector2(9, 4100), 441.6667, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="Resource_tcepo"]
 script = ExtResource("4_itk1t")
-level = 10
+level = 9
 unlock = NodePath("../AutoclickerHarvesting")
 metadata/_custom_type_script = "uid://dp8wkd836hs30"
 

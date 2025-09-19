@@ -52,7 +52,7 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
-	controller.player_state.points += controller.player_state.tile_bonus
+	controller.player_state.points += controller.player_state.tile_bonus + controller.player_state.tile_bonus_percent * tile.get_max_hp()
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	if _particles_this_frame < GameSettings.max_particles_per_tick or _click_damage:

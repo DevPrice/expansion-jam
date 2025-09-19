@@ -34,6 +34,9 @@ func _exit_tree() -> void:
 	if _is_damaged:
 		_damaged_tile_count -= 1
 
+func get_max_hp() -> float:
+	return _max_hp
+
 func apply_damage(damage: float) -> void:
 	var start_hp := hp
 	hp -= max(0, damage)
