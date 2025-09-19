@@ -25,6 +25,7 @@ var _is_damaged: bool = false
 
 @export var _animation_player: AnimationPlayer
 
+@export var _scale_root: Node2D
 @export var _texture_rect: Control
 @export var _damagable_material: Material
 
@@ -51,10 +52,10 @@ func apply_damage(damage: float) -> void:
 
 func _mouse_entered() -> void:
 	var tween := get_tree().create_tween()
-	tween.tween_property(self, "scale", 1.1 * Vector2.ONE, .05)
+	tween.tween_property(_scale_root, "scale", 1.1 * Vector2.ONE, .05)
 	tween.set_trans(Tween.TRANS_SPRING)
 
 func _mouse_exited() -> void:
 	var tween := get_tree().create_tween()
-	tween.tween_property(self, "scale", 1.0 * Vector2.ONE, .1)
+	tween.tween_property(_scale_root, "scale", 1.0 * Vector2.ONE, .1)
 	tween.set_trans(Tween.TRANS_SPRING)

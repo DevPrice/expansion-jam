@@ -10,7 +10,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position")
+tracks/0/path = NodePath("Node2D/TextureRect:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect:rotation")
+tracks/1/path = NodePath("Node2D/TextureRect:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -38,7 +38,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position")
+tracks/0/path = NodePath("Node2D/TextureRect:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +50,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect:rotation")
+tracks/1/path = NodePath("Node2D/TextureRect:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -69,13 +69,16 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qljeg"]
 size = Vector2(16, 16)
 
-[node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player", "_texture_rect")]
+[node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player", "_scale_root", "_texture_rect")]
 script = ExtResource("1_ifppd")
 _animation_player = NodePath("AnimationPlayer")
-_texture_rect = NodePath("TextureRect")
+_scale_root = NodePath("Node2D")
+_texture_rect = NodePath("Node2D/TextureRect")
 _damagable_material = ExtResource("2_qljeg")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Node2D"]
 material = ExtResource("3_qljeg")
 offset_left = -8.0
 offset_top = -8.0
