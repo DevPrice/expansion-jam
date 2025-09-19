@@ -18,7 +18,7 @@ var particle_density: ParticleDensity:
 		GameSettings.max_particles_per_tick = value
 		DeviceSettings.store_setting(GameSettings.MAX_PARTICLES_PER_TICK_SETTING_PATH, value)
 
-@export_range(0.0, 1.0, 0.025)
+@export_range(0.0, 1.0, 0.01)
 var master_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Master")

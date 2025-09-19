@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var tilemap: GameTileMap
+@export var title_label: RichTextLabel
+@export var animation_player: AnimationPlayer
 @export var player_ui_scene: PackedScene
 @export var damage_particles_scene: PackedScene
 @export var destroy_particles_scene: PackedScene
@@ -14,6 +16,7 @@ func _exit_tree() -> void:
 	get_viewport().size_changed.disconnect(_window_size_changed)
 
 func _ready() -> void:
+	title_label.text = ProjectSettings.get_setting_with_override("application/config/name")
 	# Warm these up to avoid stutter on first click
 	_damage_effect(Vector2(10000000000.0, 0.0))
 	_destroy_effect(Vector2(10000000000.0, 0.0))
@@ -36,6 +39,7 @@ func _player_joined(controller: ExpansionPlayerController) -> void:
 	_update_zoom(tilemap.bounds)
 
 func _init_game() -> void:
+	tilemap.tile_destroyed.connect(_hide_title.unbind(1), CONNECT_ONE_SHOT)
 	_update_zoom(tilemap.bounds, false)
 
 func _tile_damaged(tile: Tile, damage: float) -> void:
@@ -50,6 +54,9 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	_destroy_effect(tile.global_position)
+
+func _hide_title() -> void:
+	animation_player.play("hide_title")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():

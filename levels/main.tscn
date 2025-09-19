@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=18 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://content/shaders/background.gdshader" id="2_l8qe7"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cpfp6725ej4av" path="res://game/destroy_particles.tscn" id="4_6et1j"]
 [ext_resource type="Texture2D" uid="uid://cn2v73fst1q6l" path="res://content/textures/blank_texture.tres" id="5_5k4jt"]
 [ext_resource type="Script" uid="uid://b5q4p6ic2b2xn" path="res://game/game_tile_map.gd" id="5_ifaiv"]
+[ext_resource type="FontFile" uid="uid://dt4yqtnl1up6d" path="res://content/fonts/Quicksand-Bold.ttf" id="6_etqu2"]
 [ext_resource type="PackedScene" uid="uid://bekwwqgev8iy1" path="res://game/damage_particles.tscn" id="7_qy63d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
@@ -28,9 +29,53 @@ texture = ExtResource("5_5k4jt")
 sources/0 = SubResource("TileSetScenesCollectionSource_2262g")
 sources/1 = SubResource("TileSetAtlasSource_qy63d")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap")]
+[sub_resource type="Theme" id="Theme_6et1j"]
+default_font_size = 80
+RichTextLabel/colors/font_outline_color = Color(0.39119378, 0.041800022, 7.219613e-08, 1)
+RichTextLabel/constants/outline_size = 8
+RichTextLabel/fonts/normal_font = ExtResource("6_etqu2")
+
+[sub_resource type="Animation" id="Animation_6et1j"]
+resource_name = "hide_title"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.73333335),
+"transitions": PackedFloat32Array(1.464086, 2.0705304),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_etqu2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_etqu2"]
+_data = {
+&"RESET": SubResource("Animation_etqu2"),
+&"hide_title": SubResource("Animation_6et1j")
+}
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player")]
 script = ExtResource("1_2262g")
 tilemap = NodePath("Tiles")
+title_label = NodePath("GameTitle")
+animation_player = NodePath("GameTitle/AnimationPlayer")
 player_ui_scene = ExtResource("2_m1504")
 damage_particles_scene = ExtResource("7_qy63d")
 destroy_particles_scene = ExtResource("4_6et1j")
@@ -51,6 +96,29 @@ position = Vector2(-8, -8)
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)
 tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")
+
+[node name="GameTitle" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -20.0
+offset_right = 446.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.065, 0.065)
+theme = SubResource("Theme_6et1j")
+text = "Game Name"
+fit_content = true
+autowrap_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameTitle"]
+libraries = {
+&"": SubResource("AnimationLibrary_etqu2")
+}
 
 [connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
 [connection signal="tile_damaged" from="Tiles" to="." method="_tile_damaged"]
