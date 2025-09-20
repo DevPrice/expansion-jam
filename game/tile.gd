@@ -46,11 +46,15 @@ func apply_damage(damage: float) -> void:
 		dealt = damage
 	damaged.emit(dealt)
 	if dealt > 0:
-		_animation_player.stop()
-		_animation_player.play("damage")
+		if _animation_player.current_animation == "damage":
+			_animation_player.stop()
+		_animation_player.queue("damage")
 		if is_zero_approx(hp):
 			hp = 0.0
 			destroyed.emit()
+
+func appear() -> void:
+	_animation_player.play("appear")
 
 func _mouse_entered() -> void:
 	var tween := get_tree().create_tween()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dk4r11aytipf"]
+[gd_scene load_steps=10 format=3 uid="uid://dk4r11aytipf"]
 
 [ext_resource type="Script" uid="uid://bfmsmxbad4ttw" path="res://game/tile.gd" id="1_ifppd"]
 [ext_resource type="Texture2D" uid="uid://ceiyhgh2ufhjd" path="res://content/textures/blur_square.png" id="2_ifppd"]
@@ -10,7 +10,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D/TextureRect:position")
+tracks/0/path = NodePath("AnotherNode2D/Node2D/TextureRect:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D/TextureRect:rotation")
+tracks/1/path = NodePath("AnotherNode2D/Node2D/TextureRect:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -31,6 +31,42 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnotherNode2D/Node2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnotherNode2D/Node2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnotherNode2D/Node2D:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_ifppd"]
 resource_name = "damage"
@@ -38,7 +74,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D/TextureRect:position")
+tracks/0/path = NodePath("AnotherNode2D/Node2D/TextureRect:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +86,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D/TextureRect:rotation")
+tracks/1/path = NodePath("AnotherNode2D/Node2D/TextureRect:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -60,9 +96,50 @@ tracks/1/keys = {
 "values": [0.04363323129985824, 0.0, -0.03490658503988659, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_j3ok0"]
+resource_name = "appear"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnotherNode2D/Node2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.4609142453120048, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnotherNode2D/Node2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 0.1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnotherNode2D/Node2D:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j3ok0"]
 _data = {
 &"RESET": SubResource("Animation_qljeg"),
+&"appear": SubResource("Animation_j3ok0"),
 &"damage": SubResource("Animation_ifppd")
 }
 
@@ -72,13 +149,15 @@ size = Vector2(16, 16)
 [node name="Tile" type="Node2D" node_paths=PackedStringArray("_animation_player", "_scale_root", "_texture_rect")]
 script = ExtResource("1_ifppd")
 _animation_player = NodePath("AnimationPlayer")
-_scale_root = NodePath("Node2D")
-_texture_rect = NodePath("Node2D/TextureRect")
+_scale_root = NodePath("AnotherNode2D")
+_texture_rect = NodePath("AnotherNode2D/Node2D/TextureRect")
 _damagable_material = ExtResource("2_qljeg")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="AnotherNode2D" type="Node2D" parent="."]
 
-[node name="TextureRect" type="TextureRect" parent="Node2D"]
+[node name="Node2D" type="Node2D" parent="AnotherNode2D"]
+
+[node name="TextureRect" type="TextureRect" parent="AnotherNode2D/Node2D"]
 material = ExtResource("3_qljeg")
 offset_left = -8.0
 offset_top = -8.0

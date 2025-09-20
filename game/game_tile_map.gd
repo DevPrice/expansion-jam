@@ -33,6 +33,7 @@ func _child_entered(child: Node) -> void:
 			_hp_overrides.erase(pos)
 		else:
 			child.hp = roundf(maxf(distance, 1) * maxf(1.0, pow(2, distance / 4.0)))
+		child.appear()
 		child.damaged.connect(_tile_damaged.bind(child))
 		child.destroyed.connect(_tile_destroyed.bind(child))
 
