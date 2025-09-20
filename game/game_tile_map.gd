@@ -7,6 +7,8 @@ signal bounds_changed(bounds: Rect2i)
 var _scenes: Dictionary[Vector2i, Node]
 var bounds: Rect2i
 
+var _hp_overrides: Dictionary[Vector2i, float]
+
 func _ready() -> void:
 	for tile: Vector2i in get_used_cells():
 		_update_bounds(tile)
@@ -21,11 +23,16 @@ func _exit_tree() -> void:
 	child_exiting_tree.disconnect(_child_exiting)
 
 func _child_entered(child: Node) -> void:
-	_scenes[local_to_map(child.position)] = child
+	var pos := local_to_map(child.position)
+	_scenes[pos] = child
 	if child is Tile:
 		var cell_pos := local_to_map(child.position)
 		var distance := maxi(abs(cell_pos.x), abs(cell_pos.y))
-		child.hp = roundf(maxf(distance, 1) * maxf(1.0, pow(2, distance / 4.0)))
+		if _hp_overrides.has(pos):
+			child.hp = _hp_overrides[pos]
+			_hp_overrides.erase(pos)
+		else:
+			child.hp = roundf(maxf(distance, 1) * maxf(1.0, pow(2, distance / 4.0)))
 		child.damaged.connect(_tile_damaged.bind(child))
 		child.destroyed.connect(_tile_destroyed.bind(child))
 
@@ -51,6 +58,10 @@ func add_tile(map_pos: Vector2i, emit_bounds_changed: bool = true) -> void:
 	set_cell(map_pos, 0, Vector2i.ZERO, 1)
 	_update_bounds(map_pos)
 	if emit_bounds_changed: bounds_changed.emit(bounds)
+
+func add_tile_with_hp(map_pos: Vector2i, hp: float, emit_bounds_changed: bool = true) -> void:
+	_hp_overrides[map_pos] = hp
+	add_tile(map_pos, emit_bounds_changed)
 
 func _update_bounds(new_pos: Vector2i) -> void:
 	bounds = bounds.expand(new_pos)

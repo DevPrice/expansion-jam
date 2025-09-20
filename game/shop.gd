@@ -7,6 +7,7 @@ extends PanelContainer
 
 func _ready() -> void:
 	_controller.player_state.total_points_earned_changed.connect(_handle_unlocks, CONNECT_DEFERRED)
+	_controller.player_state.trophy_unlocked.connect(hide, CONNECT_ONE_SHOT)
 	_update_buttons(_controller.player_state.points)
 	_handle_unlocks(_controller.player_state.total_points_earned)
 

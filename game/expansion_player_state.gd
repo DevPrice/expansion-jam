@@ -5,6 +5,7 @@ signal total_points_earned_changed(points: float)
 signal autoclickers_changed(autoclickers: int)
 signal autoclick(numclicks: int)
 signal show_stats
+signal trophy_unlocked
 
 @export var bonus_damage: float = 0.0
 @export var damage_amp: float = 1.0
@@ -55,3 +56,6 @@ func get_autoclick_damage() -> float:
 
 func enable_stat_tracking() -> void:
 	show_stats.emit()
+
+func unlock_trophy() -> void:
+	trophy_unlocked.emit()

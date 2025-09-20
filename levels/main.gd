@@ -10,6 +10,7 @@ extends Node2D
 @export var damage_sound: AudioStreamPlayer
 @export var player_damage_sound: AudioStreamPlayer
 @export var player_destroy_sound: AudioStreamPlayer
+@export var trophy_renderer: TextureTileRenderer
 
 var _particles_this_frame: int = 0
 var _play_damage_sound: bool = true
@@ -47,6 +48,7 @@ func _player_joined(controller: ExpansionPlayerController) -> void:
 		player.get_viewport().add_child(canvas_layer)
 	controller.camera.enabled = true
 	controller.player_state.autoclick.connect(_autoclick)
+	controller.player_state.trophy_unlocked.connect(trophy_renderer.render_to_tilemap, CONNECT_ONE_SHOT)
 	_init_game()
 	_update_zoom(tilemap.bounds)
 
@@ -67,7 +69,10 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
-	controller.player_state.points += controller.player_state.tile_bonus + controller.player_state.tile_bonus_percent * tile.get_max_hp()
+	controller.player_state.points += controller.player_state.tile_bonus
+	var max_hp := tile.get_max_hp()
+	if not is_nan(max_hp):
+		controller.player_state.points += controller.player_state.tile_bonus_percent * max_hp
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	if _particles_this_frame < _get_max_particles_per_tick() or _click_damage:
@@ -110,6 +115,7 @@ var _click_damage: bool = false
 func _unhandled_click(event: InputEventMouseButton) -> void:
 	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
 		var state := _get_player_state()
+		if not state: return
 		var cell_pos := _viewport_to_cell_pos(event.position)
 		for dx: int in range(-state.reach, state.reach + 1):
 			for dy: int in range(-state.reach, state.reach + 1):

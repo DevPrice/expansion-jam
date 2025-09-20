@@ -42,6 +42,8 @@ func apply_damage(damage: float) -> void:
 	var start_hp := hp
 	hp -= max(0, damage)
 	var dealt := start_hp - hp
+	if is_nan(dealt):
+		dealt = damage
 	damaged.emit(dealt)
 	if dealt > 0:
 		_animation_player.stop()

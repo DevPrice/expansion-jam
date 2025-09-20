@@ -22,6 +22,7 @@ var _dirty_points: float
 
 var _allow_points_shrink: bool
 
+var _shop_revealed: bool
 var _point_tracker := PointTracker.new()
 
 func _notification(what: int) -> void:
@@ -64,7 +65,8 @@ func _update_points() -> void:
 		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	else:
 		_displayed_score = points
-	if points >= 10 and not shop.visible:
+	if points >= 10 and not _shop_revealed:
+		_shop_revealed = true
 		shop.show()
 		shop_size_changed.emit()
 		animation_player.play("reveal_shop")

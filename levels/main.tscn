@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=28 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://content/shaders/background.gdshader" id="2_l8qe7"]
@@ -15,6 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://cgw23dltpoq18" path="res://content/audio/destroy-0.ogg" id="12_c7dyn"]
 [ext_resource type="AudioStream" uid="uid://cuhvmelndw3sk" path="res://content/audio/hit/hit-002.ogg" id="13_21ko3"]
 [ext_resource type="AudioStream" uid="uid://cc8qqjf3fo4xs" path="res://content/audio/hit/hit-003.ogg" id="14_s07ge"]
+[ext_resource type="Script" uid="uid://b6k08f7jy5bts" path="res://levels/trophy_renderer.gd" id="16_21ko3"]
+[ext_resource type="Texture2D" uid="uid://c6lae2yd7j6ll" path="res://content/textures/trophy.png" id="17_s07ge"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
 shader = ExtResource("2_l8qe7")
@@ -93,7 +95,7 @@ random_volume_offset_db = 4.0
 streams_count = 1
 stream_0/stream = ExtResource("12_c7dyn")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player", "destroy_sound", "damage_sound", "player_damage_sound", "player_destroy_sound")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player", "destroy_sound", "damage_sound", "player_damage_sound", "player_destroy_sound", "trophy_renderer")]
 script = ExtResource("1_2262g")
 tilemap = NodePath("Tiles")
 title_label = NodePath("GameTitle")
@@ -105,6 +107,7 @@ destroy_sound = NodePath("DestroySound")
 damage_sound = NodePath("DamageSound")
 player_damage_sound = NodePath("PlayerDamageSound")
 player_destroy_sound = NodePath("PlayerDestroySound")
+trophy_renderer = NodePath("TrophyRenderer")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -167,6 +170,11 @@ bus = &"Effects"
 stream = SubResource("AudioStreamRandomizer_1fput")
 max_polyphony = 3
 bus = &"Effects"
+
+[node name="TrophyRenderer" type="Node" parent="." node_paths=PackedStringArray("tilemap")]
+script = ExtResource("16_21ko3")
+tilemap = NodePath("../Tiles")
+texture = ExtResource("17_s07ge")
 
 [connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
 [connection signal="tile_damaged" from="Tiles" to="." method="_tile_damaged"]
