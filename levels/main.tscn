@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=20 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://content/shaders/background.gdshader" id="2_l8qe7"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://b5q4p6ic2b2xn" path="res://game/game_tile_map.gd" id="5_ifaiv"]
 [ext_resource type="FontFile" uid="uid://dt4yqtnl1up6d" path="res://content/fonts/Quicksand-Bold.ttf" id="6_etqu2"]
 [ext_resource type="PackedScene" uid="uid://bekwwqgev8iy1" path="res://game/damage_particles.tscn" id="7_qy63d"]
+[ext_resource type="Script" uid="uid://bofu4yyhv1gaq" path="res://addons/audio/music_player.gd" id="10_jw1n3"]
+[ext_resource type="AudioStream" uid="uid://c2a8c5as2lgao" path="res://content/audio/atmospheric-landscape-for-relaxation-145461.mp3" id="11_xdh4e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
 shader = ExtResource("2_l8qe7")
@@ -122,6 +124,11 @@ horizontal_alignment = 2
 libraries = {
 &"": SubResource("AnimationLibrary_etqu2")
 }
+
+[node name="MusicPlayer" type="Node" parent="."]
+script = ExtResource("10_jw1n3")
+default_track = ExtResource("11_xdh4e")
+metadata/_custom_type_script = "uid://bofu4yyhv1gaq"
 
 [connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
 [connection signal="tile_damaged" from="Tiles" to="." method="_tile_damaged"]

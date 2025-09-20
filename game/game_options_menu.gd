@@ -18,35 +18,35 @@ var particle_density: ParticleDensity:
 		GameSettings.max_particles_per_tick = value
 		DeviceSettings.store_setting(GameSettings.MAX_PARTICLES_PER_TICK_SETTING_PATH, value)
 
-@export_range(0.0, 1.0, 0.01)
+@export_range(0, 100, 1, "suffix:%")
 var master_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Master")
-		return AudioServer.get_bus_volume_linear(bus)
+		return AudioServer.get_bus_volume_linear(bus) * 100.0
 	set(value):
 		var bus := AudioServer.get_bus_index("Master")
-		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Master"), value)
+		AudioServer.set_bus_volume_linear(bus, value * .01)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Master"), value * .01)
 
-@export_range(0.0, 1.0, 0.01)
+@export_range(0, 100, 1, "suffix:%")
 var music_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Music")
-		return AudioServer.get_bus_volume_linear(bus)
+		return AudioServer.get_bus_volume_linear(bus) * 100.0
 	set(value):
 		var bus := AudioServer.get_bus_index("Music")
-		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Music"), value)
+		AudioServer.set_bus_volume_linear(bus, value * .01)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Music"), value * .01)
 
-@export_range(0.0, 1.0, 0.01)
+@export_range(0, 100, 1, "suffix:%")
 var effects_volume: float:
 	get:
 		var bus := AudioServer.get_bus_index("Effects")
-		return AudioServer.get_bus_volume_linear(bus)
+		return AudioServer.get_bus_volume_linear(bus) * 100.0
 	set(value):
 		var bus := AudioServer.get_bus_index("Effects")
-		AudioServer.set_bus_volume_linear(bus, value)
-		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Effects"), value)
+		AudioServer.set_bus_volume_linear(bus, value * .01)
+		DeviceSettings.store_setting(GameSettings.get_volume_setting_path("Effects"), value * .01)
 
 @export
 var vsync: bool:

@@ -1,0 +1,9 @@
+[gd_resource type="AudioStreamInteractive" load_steps=2 format=3 uid="uid://bqds54f65qib4"]
+
+[ext_resource type="AudioStream" uid="uid://c2a8c5as2lgao" path="res://content/audio/atmospheric-landscape-for-relaxation-145461.mp3" id="1_2hk5l"]
+
+[resource]
+clip_count = 1
+clip_0/name = &"Atmospheric Landscape For Relaxation 145461"
+clip_0/stream = ExtResource("1_2hk5l")
+clip_0/auto_advance = 0
