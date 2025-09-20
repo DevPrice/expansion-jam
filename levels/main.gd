@@ -6,6 +6,7 @@ extends Node2D
 @export var player_ui_scene: PackedScene
 @export var damage_particles_scene: PackedScene
 @export var destroy_particles_scene: PackedScene
+@export var destroy_sound: AudioStreamPlayer
 
 var _particles_this_frame: int = 0
 
@@ -57,6 +58,7 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	if _particles_this_frame < _get_max_particles_per_tick() or _click_damage:
 		_destroy_effect(tile.global_position)
+	destroy_sound.play()
 
 func _get_max_particles_per_tick() -> int:
 	return GameSettings.max_particles_per_second / Engine.physics_ticks_per_second
@@ -185,3 +187,6 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	else:
 		camera.zoom = Vector2.ONE * zoom
 	camera.offset.x = shop_width * .5 / zoom
+
+	var volume_scale := clampf(maxi(tile_bounds.size.x, tile_bounds.size.y) / 20.0, 0.0, 1.0)
+	destroy_sound.volume_linear = lerpf(1.0, 0.05, volume_scale)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://oi3i377mpp5w"]
+[gd_scene load_steps=22 format=3 uid="uid://oi3i377mpp5w"]
 
 [ext_resource type="Script" uid="uid://dajba2sd6o6cc" path="res://levels/main.gd" id="1_2262g"]
 [ext_resource type="Shader" uid="uid://caje4wux2exux" path="res://content/shaders/background.gdshader" id="2_l8qe7"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bekwwqgev8iy1" path="res://game/damage_particles.tscn" id="7_qy63d"]
 [ext_resource type="Script" uid="uid://bofu4yyhv1gaq" path="res://addons/audio/music_player.gd" id="10_jw1n3"]
 [ext_resource type="AudioStream" uid="uid://c2a8c5as2lgao" path="res://content/audio/atmospheric-landscape-for-relaxation-145461.mp3" id="11_xdh4e"]
+[ext_resource type="AudioStream" uid="uid://cgw23dltpoq18" path="res://content/audio/destroy-0.ogg" id="12_c7dyn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1504"]
 shader = ExtResource("2_l8qe7")
@@ -74,7 +75,13 @@ _data = {
 &"hide_title": SubResource("Animation_6et1j")
 }
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1fput"]
+random_pitch = 1.25
+random_volume_offset_db = 4.0
+streams_count = 1
+stream_0/stream = ExtResource("12_c7dyn")
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player", "destroy_sound")]
 script = ExtResource("1_2262g")
 tilemap = NodePath("Tiles")
 title_label = NodePath("GameTitle")
@@ -82,6 +89,7 @@ animation_player = NodePath("GameTitle/AnimationPlayer")
 player_ui_scene = ExtResource("2_m1504")
 damage_particles_scene = ExtResource("7_qy63d")
 destroy_particles_scene = ExtResource("4_6et1j")
+destroy_sound = NodePath("DestroySound")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -129,6 +137,11 @@ libraries = {
 script = ExtResource("10_jw1n3")
 default_track = ExtResource("11_xdh4e")
 metadata/_custom_type_script = "uid://bofu4yyhv1gaq"
+
+[node name="DestroySound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_1fput")
+max_polyphony = 3
+bus = &"Effects"
 
 [connection signal="bounds_changed" from="Tiles" to="." method="_bounds_changed"]
 [connection signal="tile_damaged" from="Tiles" to="." method="_tile_damaged"]
