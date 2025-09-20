@@ -74,7 +74,7 @@ metadata/_custom_type_script = "uid://dp8wkd836hs30"
 
 [sub_resource type="Curve" id="Curve_a73qu"]
 _limits = [0.0, 275000.0, 0.0, 100.0]
-_data = [Vector2(0, 1000), 0.0, 2740.0, 0, 1, Vector2(100, 275000), 2740.0, 0.0, 1, 0]
+_data = [Vector2(0, 500), 0.0, 1445.0, 0, 1, Vector2(100, 145000), 1445.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_ew5oi"]

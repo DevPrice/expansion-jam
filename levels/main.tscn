@@ -93,7 +93,7 @@ random_volume_offset_db = 4.0
 streams_count = 1
 stream_0/stream = ExtResource("12_c7dyn")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player", "destroy_sound", "damage_sound")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "title_label", "animation_player", "destroy_sound", "damage_sound", "player_damage_sound", "player_destroy_sound")]
 script = ExtResource("1_2262g")
 tilemap = NodePath("Tiles")
 title_label = NodePath("GameTitle")
@@ -103,6 +103,8 @@ damage_particles_scene = ExtResource("7_qy63d")
 destroy_particles_scene = ExtResource("4_6et1j")
 destroy_sound = NodePath("DestroySound")
 damage_sound = NodePath("DamageSound")
+player_damage_sound = NodePath("PlayerDamageSound")
+player_destroy_sound = NodePath("PlayerDestroySound")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -143,6 +145,17 @@ libraries = {
 script = ExtResource("10_jw1n3")
 default_track = ExtResource("11_xdh4e")
 metadata/_custom_type_script = "uid://bofu4yyhv1gaq"
+
+[node name="PlayerDamageSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_c7dyn")
+pitch_scale = 0.75
+max_polyphony = 5
+bus = &"Effects"
+
+[node name="PlayerDestroySound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_1fput")
+max_polyphony = 3
+bus = &"Effects"
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_c7dyn")

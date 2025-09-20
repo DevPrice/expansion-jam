@@ -8,6 +8,8 @@ extends Node2D
 @export var destroy_particles_scene: PackedScene
 @export var destroy_sound: AudioStreamPlayer
 @export var damage_sound: AudioStreamPlayer
+@export var player_damage_sound: AudioStreamPlayer
+@export var player_destroy_sound: AudioStreamPlayer
 
 var _particles_this_frame: int = 0
 var _play_damage_sound: bool = true
@@ -56,7 +58,9 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	controller.player_state.points += damage * tile.point_value
-	if _play_damage_sound:
+	if _click_damage:
+		player_damage_sound.play()
+	elif _play_damage_sound:
 		damage_sound.play()
 		_play_damage_sound = false
 
@@ -68,7 +72,9 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	if _particles_this_frame < _get_max_particles_per_tick() or _click_damage:
 		_destroy_effect(tile.global_position)
-	if _play_destroy_sound:
+	if _click_damage:
+		player_destroy_sound.play()
+	elif _play_destroy_sound:
 		destroy_sound.play()
 		_play_destroy_sound = false
 
@@ -203,3 +209,5 @@ func _update_zoom(bounds: Rect2i = tilemap.bounds, tween_zoom: bool = true) -> v
 	var volume_scale := clampf(maxi(tile_bounds.size.x, tile_bounds.size.y) / 20.0, 0.0, 1.0)
 	destroy_sound.volume_linear = lerpf(1.0, 0.05, volume_scale)
 	damage_sound.volume_linear = lerpf(0.5, 0.0125, volume_scale * volume_scale)
+	player_damage_sound.volume_linear = clampf(damage_sound.volume_linear * 2.5, .25, 1.0)
+	player_destroy_sound.volume_linear = clampf(destroy_sound.volume_linear * 2.5, .25, 1.0)
