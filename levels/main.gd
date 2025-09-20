@@ -31,10 +31,12 @@ func _physics_process(_delta: float) -> void:
 func _player_joined(controller: ExpansionPlayerController) -> void:
 	var player := controller.get_local_player()
 	if player_ui_scene and player:
-		player.hud = player_ui_scene.instantiate()
-		controller.claim(player.hud)
+		var game_hud: GameHud = player_ui_scene.instantiate()
+		player.hud = game_hud
+		game_hud.shop_size_changed.connect(_update_zoom, CONNECT_DEFERRED)
+		controller.claim(game_hud)
 		var canvas_layer := CanvasLayer.new()
-		canvas_layer.add_child(player.hud)
+		canvas_layer.add_child(game_hud)
 		canvas_layer.layer = 10
 		player.get_viewport().add_child(canvas_layer)
 	controller.camera.enabled = true
@@ -44,7 +46,7 @@ func _player_joined(controller: ExpansionPlayerController) -> void:
 
 func _init_game() -> void:
 	tilemap.tile_destroyed.connect(_hide_title.unbind(1), CONNECT_ONE_SHOT)
-	_update_zoom(tilemap.bounds, false)
+	_update_zoom.call_deferred(tilemap.bounds, false)
 
 func _tile_damaged(tile: Tile, damage: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
@@ -151,7 +153,7 @@ func _bounds_changed(bounds: Rect2i) -> void:
 func _window_size_changed() -> void:
 	_update_zoom(tilemap.bounds, false)
 
-func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
+func _update_zoom(bounds: Rect2i = tilemap.bounds, tween_zoom: bool = true) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	var camera := controller.camera
@@ -160,8 +162,8 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 	var viewport := camera.get_window()
 	var viewport_size := Vector2(viewport.size)
 	var ui_scale := viewport.content_scale_factor
-	var shop_control: Control = controller.get_hud().get_node("Shop")
-	var shop_width: float = shop_control.size.x
+	var hud := controller.get_game_hud()
+	var shop_width: float = hud.shop.size.x if hud.shop.visible else 0.0
 	viewport_size.x -= shop_width
 
 	var world_bounds := Rect2(
@@ -192,4 +194,4 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 
 	var volume_scale := clampf(maxi(tile_bounds.size.x, tile_bounds.size.y) / 20.0, 0.0, 1.0)
 	destroy_sound.volume_linear = lerpf(1.0, 0.05, volume_scale)
-	damage_sound.volume_linear = lerpf(1.0, 0.025, volume_scale * volume_scale) * .5
+	damage_sound.volume_linear = lerpf(0.5, 0.0125, volume_scale * volume_scale)

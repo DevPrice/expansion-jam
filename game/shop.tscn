@@ -131,6 +131,7 @@ _point_unlocks = Array[ExtResource("4_itk1t")]([SubResource("Resource_wjx1w")])
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
+horizontal_scroll_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 layout_mode = 2

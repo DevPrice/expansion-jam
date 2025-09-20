@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cxbtq6b3c4wxs"]
+[gd_scene load_steps=18 format=3 uid="uid://cxbtq6b3c4wxs"]
 
 [ext_resource type="Script" uid="uid://jhgrgj5f70e2" path="res://game/player_ui.gd" id="1_3qdfi"]
 [ext_resource type="PackedScene" uid="uid://ca5e8cpj38a2v" path="res://game/shop.tscn" id="2_nw27i"]
@@ -51,7 +51,44 @@ shader = ExtResource("4_vt44r")
 shader_parameter/tint = Color(0.101960786, 0.101960786, 0.101960786, 0.6)
 shader_parameter/blur_level = 2.0
 
-[node name="PlayerUi" type="HSplitContainer" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control", "options_container")]
+[sub_resource type="Animation" id="Animation_7vmyj"]
+resource_name = "reveal_shop"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shop:custom_minimum_size")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(400, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4y2qi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shop:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(400, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4y2qi"]
+_data = {
+&"RESET": SubResource("Animation_4y2qi"),
+&"reveal_shop": SubResource("Animation_7vmyj")
+}
+
+[node name="PlayerUi" type="HSplitContainer" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control", "options_container", "shop", "animation_player")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -68,6 +105,8 @@ autoclickers_text = NodePath("MarginContainer/Control/VBoxContainer/PanelContain
 stat_tracker_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2/PointsPerSecondLabel")
 stat_tracker_control = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2")
 options_container = NodePath("MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer")
+shop = NodePath("Shop")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -195,11 +234,17 @@ size_flags_vertical = 0
 script = ExtResource("5_7vmyj")
 
 [node name="Shop" parent="." instance=ExtResource("2_nw27i")]
+visible = false
 layout_mode = 2
 
 [node name="StatTrackTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4y2qi")
+}
 
 [connection signal="toggled" from="MarginContainer/Control/MarginContainer/VBoxContainer/OptionsButton" to="." method="_options_button_toggled"]
 [connection signal="timeout" from="StatTrackTimer" to="." method="_update_stats"]

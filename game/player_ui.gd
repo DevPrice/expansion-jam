@@ -1,4 +1,6 @@
-extends Control
+class_name GameHud extends Control
+
+signal shop_size_changed
 
 @export var points_container: Control
 @export var points_text: RichTextLabel
@@ -7,6 +9,8 @@ extends Control
 @export var stat_tracker_text: RichTextLabel
 @export var stat_tracker_control: Control
 @export var options_container: Control
+@export var shop: Control
+@export var animation_player: AnimationPlayer
 
 var _displayed_score: float:
 	set(value):
@@ -23,6 +27,9 @@ var _point_tracker := PointTracker.new()
 func _notification(what: int) -> void:
 	match what:
 		Controller.NOTIFICATION_POSSESSED: _possessed(Controller.get_instigator(self))
+
+func _ready() -> void:
+	shop.item_rect_changed.connect(shop_size_changed.emit)
 
 func _process(_delta: float) -> void:
 	if _allow_points_shrink:
@@ -57,6 +64,10 @@ func _update_points() -> void:
 		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	else:
 		_displayed_score = points
+	if points >= 10 and not shop.visible:
+		shop.show()
+		shop_size_changed.emit()
+		animation_player.play("reveal_shop")
 
 func _update_autoclickers(autoclickers: int) -> void:
 	autoclickers_text.text = "Auto-clickers: %s" % NumFormat.format_points(autoclickers)
