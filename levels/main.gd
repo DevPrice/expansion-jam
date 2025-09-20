@@ -55,8 +55,11 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.points += controller.player_state.tile_bonus + controller.player_state.tile_bonus_percent * tile.get_max_hp()
 	controller.player_state.autoclickers += controller.player_state.autoclicker_harvest
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
-	if _particles_this_frame < GameSettings.max_particles_per_tick or _click_damage:
+	if _particles_this_frame < _get_max_particles_per_tick() or _click_damage:
 		_destroy_effect(tile.global_position)
+
+func _get_max_particles_per_tick() -> int:
+	return GameSettings.max_particles_per_second / Engine.physics_ticks_per_second
 
 func _hide_title() -> void:
 	animation_player.play("hide_title")
@@ -70,7 +73,7 @@ func _autoclick(count: int) -> void:
 	var state := _get_player_state()
 	if count >= tilemap.get_child_count():
 		var ratio := float(count) / tilemap.get_child_count()
-		var sample := Arrays.sample(tilemap.get_children(), GameSettings.max_particles_per_tick - _particles_this_frame)
+		var sample := Arrays.sample(tilemap.get_children(), _get_max_particles_per_tick() - _particles_this_frame)
 		for tile: Tile in sample:
 			_damage_effect(tile.global_position)
 		tilemap.propagate_call("apply_damage", [state.get_autoclick_damage() * ratio])
@@ -78,7 +81,7 @@ func _autoclick(count: int) -> void:
 		var sample := Arrays.sample(tilemap.get_children(), count)
 		sample.shuffle()
 		for tile: Tile in sample:
-			if _particles_this_frame < GameSettings.max_particles_per_tick:
+			if _particles_this_frame < _get_max_particles_per_tick():
 				_damage_effect(tile.global_position)
 			tile.apply_damage(state.get_autoclick_damage())
 
@@ -95,7 +98,7 @@ func _unhandled_click(event: InputEventMouseButton) -> void:
 					if dx == 0 and dy == 0:
 						_damage_effect(_viewport_to_global_pos(event.position))
 						_click_damage = true
-					elif _particles_this_frame < GameSettings.max_particles_per_tick:
+					elif _particles_this_frame < _get_max_particles_per_tick():
 						_damage_effect(tile.global_position)
 					tile.apply_damage(state.get_click_damage())
 					_click_damage = false

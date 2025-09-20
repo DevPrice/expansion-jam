@@ -105,6 +105,10 @@ options={
 2d_physics/layer_2="Dynamic"
 2d_physics/layer_3="Clickable"
 
+[physics]
+
+common/physics_ticks_per_second=20
+
 [players]
 
 config/player_controller_scene="uid://db3rogcwohfoj"

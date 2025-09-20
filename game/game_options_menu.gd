@@ -13,10 +13,10 @@ var window_mode: Window.Mode:
 
 @export
 var particle_density: ParticleDensity:
-	get: return GameSettings.max_particles_per_tick as ParticleDensity
+	get: return GameSettings.max_particles_per_second as ParticleDensity
 	set(value):
-		GameSettings.max_particles_per_tick = value
-		DeviceSettings.store_setting(GameSettings.MAX_PARTICLES_PER_TICK_SETTING_PATH, value)
+		GameSettings.max_particles_per_second = value
+		DeviceSettings.store_setting(GameSettings.MAX_PARTICLES_PER_SECOND_SETTING_PATH, value)
 
 @export_range(0, 100, 1, "suffix:%")
 var master_volume: float:
@@ -102,7 +102,7 @@ func _validate_property(property: Dictionary) -> void:
 		&"window_mode":
 			property.hint_string = "Windowed:0,Fullscreen:3,Exclusive fullscreen:4"
 		&"particle_density":
-			property.hint_string = "Very low:0,Low:1,Medium:3,High:5"
+			property.hint_string = "Very low:0,Low:60,Medium:180,High:300"
 
 func _config_changed(config: StringName, value: Variant) -> void:
 	match config:
@@ -127,7 +127,7 @@ func _create_container(property_info: Dictionary) -> Control:
 
 enum ParticleDensity {
 	VERY_LOW = 0,
-	LOW = 1,
-	MEDIUM = 3,
-	HIGH = 5,
+	LOW = 60,
+	MEDIUM = 180,
+	HIGH = 300,
 }
