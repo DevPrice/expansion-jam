@@ -96,12 +96,16 @@ func _unhandled_input(event: InputEvent) -> void:
 func _autoclick(count: int) -> void:
 	if count < 1: return
 	var state := _get_player_state()
-	if count >= tilemap.get_child_count():
-		var ratio := float(count) / tilemap.get_child_count()
+	var tile_count := tilemap.get_child_count()
+	if count >= tile_count:
+		var ratio := float(count) / tile_count
 		var sample := Arrays.sample(tilemap.get_children(), _get_max_particles_per_tick() - _particles_this_frame)
 		for tile: Tile in sample:
 			_damage_effect(tile.global_position)
-		tilemap.propagate_call("apply_damage", [state.get_autoclick_damage() * ratio])
+		if tile_count < 2048:
+			tilemap.propagate_call("apply_damage", [state.get_autoclick_damage() * ratio])
+		else:
+			_tile_damaged(tilemap.get_children()[0], count * tile_count * state.get_autoclick_damage())
 	else:
 		var sample := Arrays.sample(tilemap.get_children(), count)
 		sample.shuffle()
