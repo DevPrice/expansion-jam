@@ -7,6 +7,7 @@ extends Node2D
 @export var damage_particles_scene: PackedScene
 @export var destroy_particles_scene: PackedScene
 @export var destroy_sound: AudioStreamPlayer
+@export var damage_sound: AudioStreamPlayer
 
 var _particles_this_frame: int = 0
 
@@ -49,6 +50,7 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	controller.player_state.points += damage * tile.point_value
+	damage_sound.play()
 
 func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
@@ -190,3 +192,4 @@ func _update_zoom(bounds: Rect2i, tween_zoom: bool = true) -> void:
 
 	var volume_scale := clampf(maxi(tile_bounds.size.x, tile_bounds.size.y) / 20.0, 0.0, 1.0)
 	destroy_sound.volume_linear = lerpf(1.0, 0.05, volume_scale)
+	damage_sound.volume_linear = lerpf(1.0, 0.025, volume_scale * volume_scale) * .5
