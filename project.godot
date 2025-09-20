@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Expansion"
+config/name="Incremental Expansion"
 run/main_scene="uid://oi3i377mpp5w"
 config/use_custom_user_dir=true
 config/project_settings_override="user://settings.cfg"

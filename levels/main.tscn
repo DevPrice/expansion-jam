@@ -122,17 +122,10 @@ tile_set = SubResource("TileSet_2262g")
 script = ExtResource("5_ifaiv")
 
 [node name="GameTitle" type="RichTextLabel" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -29.0
-offset_right = 421.0
-offset_bottom = 71.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -72.0
+offset_top = -34.0
+offset_right = 428.0
+offset_bottom = 66.0
 scale = Vector2(0.1, 0.1)
 size_flags_horizontal = 8
 theme = SubResource("Theme_6et1j")
