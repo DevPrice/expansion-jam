@@ -10,6 +10,8 @@ extends Node2D
 @export var damage_sound: AudioStreamPlayer
 
 var _particles_this_frame: int = 0
+var _play_damage_sound: bool = true
+var _play_destroy_sound: bool = true
 
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
@@ -27,6 +29,8 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	_particles_this_frame = 0
+	_play_damage_sound = true
+	_play_destroy_sound = true
 
 func _player_joined(controller: ExpansionPlayerController) -> void:
 	var player := controller.get_local_player()
@@ -52,7 +56,9 @@ func _tile_damaged(tile: Tile, damage: float) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
 	if not controller: return
 	controller.player_state.points += damage * tile.point_value
-	damage_sound.play()
+	if _play_damage_sound:
+		damage_sound.play()
+		_play_damage_sound = false
 
 func _tile_destroyed(tile: Tile) -> void:
 	var controller: ExpansionPlayerController = Players.get_primary_controller()
@@ -62,7 +68,9 @@ func _tile_destroyed(tile: Tile) -> void:
 	controller.player_state.autoclicker_bonus_damage += controller.player_state.autoclicker_power_harvest
 	if _particles_this_frame < _get_max_particles_per_tick() or _click_damage:
 		_destroy_effect(tile.global_position)
-	destroy_sound.play()
+	if _play_destroy_sound:
+		destroy_sound.play()
+		_play_destroy_sound = false
 
 func _get_max_particles_per_tick() -> int:
 	return GameSettings.max_particles_per_second / Engine.physics_ticks_per_second
