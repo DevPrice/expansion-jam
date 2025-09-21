@@ -88,7 +88,7 @@ _data = {
 &"reveal_shop": SubResource("Animation_7vmyj")
 }
 
-[node name="PlayerUi" type="HSplitContainer" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control", "options_container", "shop", "animation_player")]
+[node name="PlayerUi" type="HSplitContainer" node_paths=PackedStringArray("points_container", "points_text", "autoclickers_container", "autoclickers_text", "stat_tracker_text", "stat_tracker_control", "options_container", "shop", "_thanks_for_playing", "animation_player")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -106,6 +106,7 @@ stat_tracker_text = NodePath("MarginContainer/Control/VBoxContainer/HBoxContaine
 stat_tracker_control = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/PanelContainer2")
 options_container = NodePath("MarginContainer/Control/MarginContainer/VBoxContainer/OptionsContainer")
 shop = NodePath("Shop")
+_thanks_for_playing = NodePath("MarginContainer/Control/Bottom/ThanksForPlaying")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -232,6 +233,32 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_vertical = 0
 script = ExtResource("5_7vmyj")
+
+[node name="Bottom" type="VBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ThanksForPlaying" type="PanelContainer" parent="MarginContainer/Control/Bottom"]
+visible = false
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_vt44r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgxck")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Control/Bottom/ThanksForPlaying"]
+layout_mode = 2
+text = "Thanks for playing!"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Shop" parent="." instance=ExtResource("2_nw27i")]
 visible = false

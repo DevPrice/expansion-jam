@@ -10,6 +10,7 @@ signal shop_size_changed
 @export var stat_tracker_control: Control
 @export var options_container: Control
 @export var shop: Control
+@export var _thanks_for_playing: Control
 @export var animation_player: AnimationPlayer
 
 var _displayed_score: float:
@@ -45,6 +46,7 @@ func _possessed(controller: ExpansionPlayerController) -> void:
 	controller.player_state.points_changed.connect(_updated_points_deferred)
 	controller.player_state.show_stats.connect(stat_tracker_control.show, CONNECT_ONE_SHOT)
 	controller.player_state.autoclickers_changed.connect(_update_autoclickers)
+	controller.player_state.trophy_unlocked.connect(_thanks_for_playing.show, CONNECT_ONE_SHOT)
 	_point_tracker.stats_changed.connect(_update_point_stats)
 
 func _updated_points_deferred(points: float) -> void:
