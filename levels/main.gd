@@ -16,6 +16,8 @@ var _particles_this_frame: int = 0
 var _play_damage_sound: bool = true
 var _play_destroy_sound: bool = true
 
+const MAX_TILES_PER_FRAME := 100
+
 func _enter_tree() -> void:
 	Players.player_joined.connect(_player_joined)
 	get_viewport().size_changed.connect(_window_size_changed)
@@ -97,7 +99,17 @@ func _autoclick(count: int) -> void:
 	if count < 1: return
 	var state := _get_player_state()
 	var tile_count := tilemap.get_child_count()
-	if count >= tile_count:
+	if tile_count > MAX_TILES_PER_FRAME:
+		var sample := Arrays.sample(tilemap.get_children(), MAX_TILES_PER_FRAME)
+		var ratio := count / float(MAX_TILES_PER_FRAME)
+		var effects_sample := Arrays.sample(sample, _get_max_particles_per_tick())
+		effects_sample.shuffle()
+		for tile: Tile in sample:
+			tile.apply_damage(state.get_autoclick_damage() * ratio)
+		for tile: Tile in effects_sample:
+			if _particles_this_frame < _get_max_particles_per_tick():
+				_damage_effect(tile.global_position)
+	elif count >= tile_count:
 		var ratio := float(count) / tile_count
 		var sample := Arrays.sample(tilemap.get_children(), _get_max_particles_per_tick() - _particles_this_frame)
 		for tile: Tile in sample:
@@ -108,11 +120,13 @@ func _autoclick(count: int) -> void:
 			_tile_damaged(tilemap.get_children()[0], count * tile_count * state.get_autoclick_damage())
 	else:
 		var sample := Arrays.sample(tilemap.get_children(), count)
-		sample.shuffle()
+		var effects_sample := Arrays.sample(sample, _get_max_particles_per_tick())
+		effects_sample.shuffle()
 		for tile: Tile in sample:
+			tile.apply_damage(state.get_autoclick_damage())
+		for tile: Tile in effects_sample:
 			if _particles_this_frame < _get_max_particles_per_tick():
 				_damage_effect(tile.global_position)
-			tile.apply_damage(state.get_autoclick_damage())
 
 # TODO: Ew, a hack in my jam game
 var _click_damage: bool = false

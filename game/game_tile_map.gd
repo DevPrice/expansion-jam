@@ -7,6 +7,7 @@ signal bounds_changed(bounds: Rect2i)
 var _scenes: Dictionary[Vector2i, Node]
 var bounds: Rect2i
 
+var _bounds_dirty: bool = false
 var _hp_overrides: Dictionary[Vector2i, float]
 
 func _ready() -> void:
@@ -53,6 +54,12 @@ func _tile_destroyed(tile: Tile) -> void:
 			add_tile(neighbor_pos, false)
 	set_cell(cell_pos, 1, Vector2.ZERO)
 	tile_destroyed.emit(tile)
+	_bounds_dirty = true
+	_update_bounds_deferred.call_deferred()
+
+func _update_bounds_deferred() -> void:
+	if not _bounds_dirty: return
+	_bounds_dirty = false
 	bounds_changed.emit(bounds)
 
 func add_tile(map_pos: Vector2i, emit_bounds_changed: bool = true) -> void:
