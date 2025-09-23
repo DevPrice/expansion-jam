@@ -81,12 +81,15 @@ func _exit_tree() -> void:
 	get_window().size_changed.disconnect(notify_property_list_changed)
 
 func close_game() -> void:
-	DisplayServer.dialog_show(
+	var err := DisplayServer.dialog_show(
 		"Quit game?",
 		"Are you sure you want to quit? Your progress will not be saved.",
 		PackedStringArray(["Quit", "Cancel"]),
 		_option_selected,
 	)
+	if err:
+		push_warning(error_string(err))
+		get_tree().quit()
 
 func _option_selected(option: int) -> void:
 	if not option: get_tree().quit()

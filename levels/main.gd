@@ -117,7 +117,7 @@ func _autoclick(count: int) -> void:
 # TODO: Ew, a hack in my jam game
 var _click_damage: bool = false
 func _unhandled_click(event: InputEventMouseButton) -> void:
-	if event.button_index & MOUSE_BUTTON_MASK_LEFT:
+	if event.button_index == MOUSE_BUTTON_LEFT:
 		var state := _get_player_state()
 		if not state: return
 		var cell_pos := _viewport_to_cell_pos(event.position)
